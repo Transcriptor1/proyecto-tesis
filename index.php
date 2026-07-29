@@ -3,7 +3,7 @@
 
 <head>
     <meta charset="UTF-8">
-    <title>Directorio</title>
+    <title>SIRAD - Sistema de Registro y Administración de Directorios</title>
 
     <style>
         * {
@@ -152,18 +152,18 @@
 
     <header>
         <div class="logo">
-            Logo<br>
-            <small>Directorio</small>
+            SIRAD<br>
+            <small>Sistema de Registro y Administración de Directorios</small>
         </div>
         <nav>
-            <a href="instituciones.php">Instituciones</a>
+            <a href="instituciones-e.php">Instituciones</a>
             <a href="practicantes.php">Practicantes</a>
             <a href="artistas.php">Artistas</a>
-            <a href="team_pombo.php">Team</a>
+            <a href="team.php">Team</a>
         </nav>
     </header>
 
-    <h1>Directorio</h1>
+    <h1>SIRAD</h1>
 
     <div class="container">
 

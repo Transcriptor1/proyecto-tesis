@@ -19,9 +19,19 @@
 
   <?php
   if ($_POST) {
-    $conn->query("INSERT INTO artistas VALUES(
-NULL,'$_POST[nombre]','$_POST[perfil]','$_POST[organizacion]',
-'$_POST[agenda]','$_POST[telefono]','$_POST[correo]','$_POST[filbo]')");
+    $stmt = $conn->prepare("INSERT INTO artistas (nombre, perfil, organizacion, agenda, telefono, correo, filbo) VALUES (?, ?, ?, ?, ?, ?, ?)");
+    $stmt->bind_param(
+      "sssssss",
+      $_POST['nombre'],
+      $_POST['perfil'],
+      $_POST['organizacion'],
+      $_POST['agenda'],
+      $_POST['telefono'],
+      $_POST['correo'],
+      $_POST['filbo']
+    );
+    $stmt->execute();
+    $stmt->close();
   }
   ?>
 
@@ -33,7 +43,7 @@ NULL,'$_POST[nombre]','$_POST[perfil]','$_POST[organizacion]',
     <?php
     $r = $conn->query("SELECT * FROM artistas");
     while ($f = $r->fetch_assoc()) {
-      echo "<tr><td>$f[nombre]</td><td>$f[organizacion]</td></tr>";
+      echo "<tr><td>" . htmlspecialchars($f['nombre']) . "</td><td>" . htmlspecialchars($f['organizacion']) . "</td></tr>";
     }
     ?>
   </table>
