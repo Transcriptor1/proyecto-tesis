@@ -17,9 +17,17 @@
 
   <?php
   if ($_POST) {
-    $conn->query("INSERT INTO talleristas VALUES(
-NULL,'$_POST[nombre]','$_POST[telefono]','$_POST[correo]',
-'$_POST[cargo]','$_POST[perfil]')");
+    $stmt = $conn->prepare("INSERT INTO talleristas (nombre, telefono, correo, cargo, perfil) VALUES (?, ?, ?, ?, ?)");
+    $stmt->bind_param(
+      "sssss",
+      $_POST['nombre'],
+      $_POST['telefono'],
+      $_POST['correo'],
+      $_POST['cargo'],
+      $_POST['perfil']
+    );
+    $stmt->execute();
+    $stmt->close();
   }
   ?>
 
@@ -27,7 +35,7 @@ NULL,'$_POST[nombre]','$_POST[telefono]','$_POST[correo]',
     <?php
     $r = $conn->query("SELECT * FROM talleristas");
     while ($f = $r->fetch_assoc()) {
-      echo "<tr><td>$f[nombre]</td><td>$f[cargo]</td></tr>";
+      echo "<tr><td>" . htmlspecialchars($f['nombre']) . "</td><td>" . htmlspecialchars($f['cargo']) . "</td></tr>";
     }
     ?>
   </table>

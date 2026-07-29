@@ -18,12 +18,22 @@
   </form>
 
   <?php
-if($_POST){
-$conn->query("INSERT INTO editoriales VALUES(
-NULL,'$_POST[nombre]','$_POST[nit]','$_POST[contacto]',
-'$_POST[telefono]','$_POST[direccion]','$_POST[correo]','$_POST[descuento]')");
-}
-?>
+  if ($_POST) {
+    $stmt = $conn->prepare("INSERT INTO editoriales (nombre, nit, contacto, telefono, direccion, correo, descuento) VALUES (?, ?, ?, ?, ?, ?, ?)");
+    $stmt->bind_param(
+      "sssssss",
+      $_POST['nombre'],
+      $_POST['nit'],
+      $_POST['contacto'],
+      $_POST['telefono'],
+      $_POST['direccion'],
+      $_POST['correo'],
+      $_POST['descuento']
+    );
+    $stmt->execute();
+    $stmt->close();
+  }
+  ?>
 
 </body>
 

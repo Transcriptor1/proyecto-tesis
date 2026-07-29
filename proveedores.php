@@ -17,9 +17,17 @@
 
   <?php
   if ($_POST) {
-    $conn->query("INSERT INTO proveedores VALUES(
-NULL,'$_POST[pais]','$_POST[nombre]',
-'$_POST[direccion]','$_POST[telefono]','$_POST[correo]')");
+    $stmt = $conn->prepare("INSERT INTO proveedores (pais, nombre, direccion, telefono, correo) VALUES (?, ?, ?, ?, ?)");
+    $stmt->bind_param(
+      "sssss",
+      $_POST['pais'],
+      $_POST['nombre'],
+      $_POST['direccion'],
+      $_POST['telefono'],
+      $_POST['correo']
+    );
+    $stmt->execute();
+    $stmt->close();
   }
   ?>
 

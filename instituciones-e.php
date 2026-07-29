@@ -23,10 +23,23 @@
 
     <?php
     if ($_POST) {
-        $conn->query("INSERT INTO instituciones_e VALUES(
-NULL,'$_POST[clase]','$_POST[nombre]','$_POST[nit]','$_POST[calidad]',
-'$_POST[jornada]','$_POST[contacto]','$_POST[cargo]',
-'$_POST[telefono]','$_POST[direccion]','$_POST[correo]','$_POST[ciudad]')");
+        $stmt = $conn->prepare("INSERT INTO instituciones_e (clase, nombre, nit, calidad, jornada, contacto, cargo, telefono, direccion, correo, ciudad) VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)");
+        $stmt->bind_param(
+            "sssssssssss",
+            $_POST['clase'],
+            $_POST['nombre'],
+            $_POST['nit'],
+            $_POST['calidad'],
+            $_POST['jornada'],
+            $_POST['contacto'],
+            $_POST['cargo'],
+            $_POST['telefono'],
+            $_POST['direccion'],
+            $_POST['correo'],
+            $_POST['ciudad']
+        );
+        $stmt->execute();
+        $stmt->close();
     }
     ?>
 
@@ -39,7 +52,7 @@ NULL,'$_POST[clase]','$_POST[nombre]','$_POST[nit]','$_POST[calidad]',
         <?php
         $r = $conn->query("SELECT * FROM instituciones_e");
         while ($f = $r->fetch_assoc()) {
-            echo "<tr><td>$f[nombre]</td><td>$f[nit]</td><td>$f[ciudad]</td></tr>";
+            echo "<tr><td>" . htmlspecialchars($f['nombre']) . "</td><td>" . htmlspecialchars($f['nit']) . "</td><td>" . htmlspecialchars($f['ciudad']) . "</td></tr>";
         }
         ?>
     </table>

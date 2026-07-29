@@ -22,10 +22,22 @@
 
     <?php
     if ($_POST) {
-        $conn->query("INSERT INTO mercadeo VALUES(
-NULL,'$_POST[empresa]','$_POST[nombre]','$_POST[cargo]','$_POST[tema]',
-'$_POST[contacto]','$_POST[telefono]','$_POST[correo]',
-'$_POST[direccion]','$_POST[proyecto]','$_POST[patrocinio]')");
+        $stmt = $conn->prepare("INSERT INTO mercadeo (empresa, nombre, cargo, tema, contacto, telefono, correo, direccion, proyecto, patrocinio) VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?)");
+        $stmt->bind_param(
+            "ssssssssss",
+            $_POST['empresa'],
+            $_POST['nombre'],
+            $_POST['cargo'],
+            $_POST['tema'],
+            $_POST['contacto'],
+            $_POST['telefono'],
+            $_POST['correo'],
+            $_POST['direccion'],
+            $_POST['proyecto'],
+            $_POST['patrocinio']
+        );
+        $stmt->execute();
+        $stmt->close();
     }
     ?>
 

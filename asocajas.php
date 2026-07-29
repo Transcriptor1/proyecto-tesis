@@ -19,9 +19,19 @@
 
   <?php
   if ($_POST) {
-    $conn->query("INSERT INTO asocajas VALUES(
-NULL,'$_POST[caja]','$_POST[departamento]','$_POST[cargo]',
-'$_POST[contacto]','$_POST[telefono]','$_POST[direccion]','$_POST[correo]')");
+    $stmt = $conn->prepare("INSERT INTO asocajas (caja, departamento, cargo, contacto, telefono, direccion, correo) VALUES (?, ?, ?, ?, ?, ?, ?)");
+    $stmt->bind_param(
+      "sssssss",
+      $_POST['caja'],
+      $_POST['departamento'],
+      $_POST['cargo'],
+      $_POST['contacto'],
+      $_POST['telefono'],
+      $_POST['direccion'],
+      $_POST['correo']
+    );
+    $stmt->execute();
+    $stmt->close();
   }
   ?>
 

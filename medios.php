@@ -20,10 +20,20 @@
 
   <?php
   if ($_POST) {
-    $conn->query("INSERT INTO medios VALUES(
-NULL,'$_POST[categoria]','$_POST[medio]','$_POST[fuente]',
-'$_POST[nombre]','$_POST[correo]','$_POST[telefono]',
-'$_POST[telefono2]','$_POST[direccion]')");
+    $stmt = $conn->prepare("INSERT INTO medios (categoria, medio, fuente, nombre, correo, telefono, telefono2, direccion) VALUES (?, ?, ?, ?, ?, ?, ?, ?)");
+    $stmt->bind_param(
+      "ssssssss",
+      $_POST['categoria'],
+      $_POST['medio'],
+      $_POST['fuente'],
+      $_POST['nombre'],
+      $_POST['correo'],
+      $_POST['telefono'],
+      $_POST['telefono2'],
+      $_POST['direccion']
+    );
+    $stmt->execute();
+    $stmt->close();
   }
   ?>
 

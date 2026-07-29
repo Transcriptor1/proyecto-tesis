@@ -62,22 +62,26 @@
 
   <?php
   if ($_POST) {
-    $conn->query("
-    INSERT INTO practicantes VALUES (
-      NULL,
-      '{$_POST['nombre']}',
-      '{$_POST['telefono']}',
-      '{$_POST['correo']}',
-      '{$_POST['direccion']}',
-      '{$_POST['disciplina']}',
-      '{$_POST['generacion']}',
-      '{$_POST['inicio']}',
-      '{$_POST['fin']}',
-      '{$_POST['cumple']}',
-      '{$_POST['contacto']}',
-      '{$_POST['telefono_contacto']}'
-    )
-  ");
+    $inicio = $_POST['inicio'] !== '' ? $_POST['inicio'] : null;
+    $fin = $_POST['fin'] !== '' ? $_POST['fin'] : null;
+    $cumple = $_POST['cumple'] !== '' ? $_POST['cumple'] : null;
+    $stmt = $conn->prepare("INSERT INTO practicantes (nombre, telefono, correo, direccion, disciplina, generacion, inicio, fin, cumple, contacto, telefono_contacto) VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)");
+    $stmt->bind_param(
+      "sssssssssss",
+      $_POST['nombre'],
+      $_POST['telefono'],
+      $_POST['correo'],
+      $_POST['direccion'],
+      $_POST['disciplina'],
+      $_POST['generacion'],
+      $inicio,
+      $fin,
+      $cumple,
+      $_POST['contacto'],
+      $_POST['telefono_contacto']
+    );
+    $stmt->execute();
+    $stmt->close();
   }
   ?>
 
@@ -93,10 +97,10 @@
     $res = $conn->query("SELECT * FROM practicantes");
     while ($r = $res->fetch_assoc()) {
       echo "<tr>
-    <td>{$r['nombre']}</td>
-    <td>{$r['telefono']}</td>
-    <td>{$r['correo']}</td>
-    <td>{$r['disciplina']}</td>
+    <td>" . htmlspecialchars($r['nombre']) . "</td>
+    <td>" . htmlspecialchars($r['telefono']) . "</td>
+    <td>" . htmlspecialchars($r['correo']) . "</td>
+    <td>" . htmlspecialchars($r['disciplina']) . "</td>
   </tr>";
     }
     ?>
