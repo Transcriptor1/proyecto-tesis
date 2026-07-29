@@ -171,7 +171,7 @@
             <div class="icon">🏫</div>
             <h3>Instituciones Educativas</h3>
             <p>Universidades, colegios y jardines vinculados</p>
-            <a href="instituciones.php" class="blue">Ingresar</a>
+            <a href="instituciones-e.php" class="blue">Ingresar</a>
         </div>
 
         <div class="card">
@@ -234,7 +234,7 @@
             <div class="icon">👥</div>
             <h3>Team</h3>
             <p>Equipo interno de la fundación</p>
-            <a href="team_pombo.php" class="purple">Ingresar</a>
+            <a href="team.php" class="purple">Ingresar</a>
         </div>
 
         <div class="card">
