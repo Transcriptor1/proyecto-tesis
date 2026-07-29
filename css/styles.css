@@ -33,6 +33,13 @@ header a:hover {
     text-decoration: underline;
 }
 
+.header-actions {
+    display: flex;
+    align-items: center;
+    gap: 18px;
+    font-size: 14px;
+}
+
 main {
     max-width: 1300px;
     margin: 30px auto;
@@ -117,4 +124,62 @@ th {
 
 tbody tr:hover td {
     background: #f9fafb;
+}
+
+.auth-page {
+    min-height: 100vh;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    padding: 20px;
+}
+
+.auth-card {
+    width: 100%;
+    max-width: 380px;
+    grid-template-columns: 1fr;
+    text-align: center;
+}
+
+.auth-card h1 {
+    margin: 0;
+    color: #2563eb;
+}
+
+.auth-subtitle {
+    margin: 0 0 10px;
+    color: #6b7280;
+    font-size: 14px;
+}
+
+.auth-error {
+    background: #fee2e2;
+    color: #b91c1c;
+    padding: 10px;
+    border-radius: 8px;
+    font-size: 14px;
+    margin: 0;
+}
+
+.auth-success {
+    background: #dcfce7;
+    color: #15803d;
+    padding: 10px;
+    border-radius: 8px;
+    font-size: 14px;
+    margin: 0;
+}
+
+.auth-link {
+    margin: 0;
+    font-size: 14px;
+}
+
+.auth-link a {
+    color: #2563eb;
+    text-decoration: none;
+}
+
+.auth-link a:hover {
+    text-decoration: underline;
 }

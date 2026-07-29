@@ -1,4 +1,4 @@
-<?php include "conexion.php"; ?>
+<?php require "auth.php"; include "conexion.php"; ?>
 <!DOCTYPE html>
 <html lang="es">
 
@@ -12,7 +12,11 @@
 
   <header>
     <div class="logo">SIRAD</div>
-    <a href="index.php">&larr; Volver al directorio</a>
+    <div class="header-actions">
+      <span>Hola, <?= htmlspecialchars($_SESSION['usuario_nombre']) ?></span>
+      <a href="index.php">&larr; Volver al directorio</a>
+      <a href="logout.php">Cerrar sesión</a>
+    </div>
   </header>
 
   <main>

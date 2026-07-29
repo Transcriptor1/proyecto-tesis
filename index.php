@@ -1,3 +1,4 @@
+<?php require "auth.php"; ?>
 <!DOCTYPE html>
 <html lang="es">
 
@@ -40,6 +41,13 @@
 
         header nav a:hover {
             text-decoration: underline;
+        }
+
+        .header-actions {
+            display: flex;
+            align-items: center;
+            gap: 18px;
+            font-size: 14px;
         }
 
         h1 {
@@ -161,6 +169,10 @@
             <a href="artistas.php">Artistas</a>
             <a href="team.php">Team</a>
         </nav>
+        <div class="header-actions">
+            <span>Hola, <?= htmlspecialchars($_SESSION['usuario_nombre']) ?></span>
+            <a href="logout.php">Cerrar sesión</a>
+        </div>
     </header>
 
     <h1>SIRAD</h1>
