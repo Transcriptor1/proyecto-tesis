@@ -22,6 +22,11 @@
   <main>
     <h1>Instituciones Educativas</h1>
 
+    <div class="page-actions">
+      <a href="instituciones-e.php" class="active">Registrar</a>
+      <a href="instituciones-e_registros.php">Ver registros</a>
+    </div>
+
     <form class="form-card" method="POST">
       <label>Clase institución<input name="clase"></label>
       <label>Nombre institución<input name="nombre"></label>
@@ -56,44 +61,10 @@
       );
       $stmt->execute();
       $stmt->close();
+      header("Location: instituciones-e_registros.php");
+      exit;
     }
     ?>
-
-    <div class="table-card">
-      <table>
-        <tr>
-          <th>Clase</th>
-          <th>Nombre</th>
-          <th>NIT</th>
-          <th>Calidad</th>
-          <th>Jornada</th>
-          <th>Contacto</th>
-          <th>Cargo</th>
-          <th>Teléfono</th>
-          <th>Dirección</th>
-          <th>Correo</th>
-          <th>Ciudad</th>
-        </tr>
-        <?php
-        $r = $conn->query("SELECT * FROM instituciones_e");
-        while ($f = $r->fetch_assoc()) {
-          echo "<tr>"
-            . "<td>" . htmlspecialchars($f['clase']) . "</td>"
-            . "<td>" . htmlspecialchars($f['nombre']) . "</td>"
-            . "<td>" . htmlspecialchars($f['nit']) . "</td>"
-            . "<td>" . htmlspecialchars($f['calidad']) . "</td>"
-            . "<td>" . htmlspecialchars($f['jornada']) . "</td>"
-            . "<td>" . htmlspecialchars($f['contacto']) . "</td>"
-            . "<td>" . htmlspecialchars($f['cargo']) . "</td>"
-            . "<td>" . htmlspecialchars($f['telefono']) . "</td>"
-            . "<td>" . htmlspecialchars($f['direccion']) . "</td>"
-            . "<td>" . htmlspecialchars($f['correo']) . "</td>"
-            . "<td>" . htmlspecialchars($f['ciudad']) . "</td>"
-            . "</tr>";
-        }
-        ?>
-      </table>
-    </div>
   </main>
 
 </body>

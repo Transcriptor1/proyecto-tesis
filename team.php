@@ -22,6 +22,11 @@
   <main>
     <h1>Team</h1>
 
+    <div class="page-actions">
+      <a href="team.php" class="active">Registrar</a>
+      <a href="team_registros.php">Ver registros</a>
+    </div>
+
     <form class="form-card" method="POST">
       <label>Nombre<input name="nombre"></label>
       <label>Apellido<input name="apellido"></label>
@@ -57,42 +62,10 @@
       );
       $stmt->execute();
       $stmt->close();
+      header("Location: team_registros.php");
+      exit;
     }
     ?>
-
-    <div class="table-card">
-      <table>
-        <tr>
-          <th>Nombre</th>
-          <th>Apellido</th>
-          <th>Celular</th>
-          <th>Correo</th>
-          <th>Cargo</th>
-          <th>Cumpleaños</th>
-          <th>Contacto</th>
-          <th>Teléfono</th>
-          <th>Inicio</th>
-          <th>Fin</th>
-        </tr>
-        <?php
-        $r = $conn->query("SELECT * FROM team_pombo");
-        while ($f = $r->fetch_assoc()) {
-          echo "<tr>"
-            . "<td>" . htmlspecialchars($f['nombre']) . "</td>"
-            . "<td>" . htmlspecialchars($f['apellido']) . "</td>"
-            . "<td>" . htmlspecialchars($f['celular']) . "</td>"
-            . "<td>" . htmlspecialchars($f['correo']) . "</td>"
-            . "<td>" . htmlspecialchars($f['cargo']) . "</td>"
-            . "<td>" . htmlspecialchars($f['cumple']) . "</td>"
-            . "<td>" . htmlspecialchars($f['contacto']) . "</td>"
-            . "<td>" . htmlspecialchars($f['telefono']) . "</td>"
-            . "<td>" . htmlspecialchars($f['inicio']) . "</td>"
-            . "<td>" . htmlspecialchars($f['fin']) . "</td>"
-            . "</tr>";
-        }
-        ?>
-      </table>
-    </div>
   </main>
 
 </body>

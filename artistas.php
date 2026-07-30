@@ -22,6 +22,11 @@
   <main>
     <h1>Artistas</h1>
 
+    <div class="page-actions">
+      <a href="artistas.php" class="active">Registrar</a>
+      <a href="artistas_registros.php">Ver registros</a>
+    </div>
+
     <form class="form-card" method="POST">
       <label>Nombre<input name="nombre"></label>
       <label>Perfil<input name="perfil"></label>
@@ -48,36 +53,10 @@
       );
       $stmt->execute();
       $stmt->close();
+      header("Location: artistas_registros.php");
+      exit;
     }
     ?>
-
-    <div class="table-card">
-      <table>
-        <tr>
-          <th>Nombre</th>
-          <th>Perfil</th>
-          <th>Organización</th>
-          <th>Agenda</th>
-          <th>Teléfono</th>
-          <th>Correo</th>
-          <th>Filbo</th>
-        </tr>
-        <?php
-        $r = $conn->query("SELECT * FROM artistas");
-        while ($f = $r->fetch_assoc()) {
-          echo "<tr>"
-            . "<td>" . htmlspecialchars($f['nombre']) . "</td>"
-            . "<td>" . htmlspecialchars($f['perfil']) . "</td>"
-            . "<td>" . htmlspecialchars($f['organizacion']) . "</td>"
-            . "<td>" . htmlspecialchars($f['agenda']) . "</td>"
-            . "<td>" . htmlspecialchars($f['telefono']) . "</td>"
-            . "<td>" . htmlspecialchars($f['correo']) . "</td>"
-            . "<td>" . htmlspecialchars($f['filbo']) . "</td>"
-            . "</tr>";
-        }
-        ?>
-      </table>
-    </div>
   </main>
 
 </body>

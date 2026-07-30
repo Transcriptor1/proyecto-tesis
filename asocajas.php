@@ -22,6 +22,11 @@
   <main>
     <h1>Asocajas</h1>
 
+    <div class="page-actions">
+      <a href="asocajas.php" class="active">Registrar</a>
+      <a href="asocajas_registros.php">Ver registros</a>
+    </div>
+
     <form class="form-card" method="POST">
       <label>Caja<input name="caja"></label>
       <label>Departamento<input name="departamento"></label>
@@ -48,36 +53,10 @@
       );
       $stmt->execute();
       $stmt->close();
+      header("Location: asocajas_registros.php");
+      exit;
     }
     ?>
-
-    <div class="table-card">
-      <table>
-        <tr>
-          <th>Caja</th>
-          <th>Departamento</th>
-          <th>Cargo</th>
-          <th>Contacto</th>
-          <th>Teléfono</th>
-          <th>Dirección</th>
-          <th>Correo</th>
-        </tr>
-        <?php
-        $r = $conn->query("SELECT * FROM asocajas");
-        while ($f = $r->fetch_assoc()) {
-          echo "<tr>"
-            . "<td>" . htmlspecialchars($f['caja']) . "</td>"
-            . "<td>" . htmlspecialchars($f['departamento']) . "</td>"
-            . "<td>" . htmlspecialchars($f['cargo']) . "</td>"
-            . "<td>" . htmlspecialchars($f['contacto']) . "</td>"
-            . "<td>" . htmlspecialchars($f['telefono']) . "</td>"
-            . "<td>" . htmlspecialchars($f['direccion']) . "</td>"
-            . "<td>" . htmlspecialchars($f['correo']) . "</td>"
-            . "</tr>";
-        }
-        ?>
-      </table>
-    </div>
   </main>
 
 </body>

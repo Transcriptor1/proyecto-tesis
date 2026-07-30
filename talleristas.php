@@ -22,6 +22,11 @@
   <main>
     <h1>Talleristas</h1>
 
+    <div class="page-actions">
+      <a href="talleristas.php" class="active">Registrar</a>
+      <a href="talleristas_registros.php">Ver registros</a>
+    </div>
+
     <form class="form-card" method="POST">
       <label>Nombre<input name="nombre"></label>
       <label>Teléfono<input name="telefono"></label>
@@ -44,32 +49,10 @@
       );
       $stmt->execute();
       $stmt->close();
+      header("Location: talleristas_registros.php");
+      exit;
     }
     ?>
-
-    <div class="table-card">
-      <table>
-        <tr>
-          <th>Nombre</th>
-          <th>Teléfono</th>
-          <th>Correo</th>
-          <th>Cargo</th>
-          <th>Perfil</th>
-        </tr>
-        <?php
-        $r = $conn->query("SELECT * FROM talleristas");
-        while ($f = $r->fetch_assoc()) {
-          echo "<tr>"
-            . "<td>" . htmlspecialchars($f['nombre']) . "</td>"
-            . "<td>" . htmlspecialchars($f['telefono']) . "</td>"
-            . "<td>" . htmlspecialchars($f['correo']) . "</td>"
-            . "<td>" . htmlspecialchars($f['cargo']) . "</td>"
-            . "<td>" . htmlspecialchars($f['perfil']) . "</td>"
-            . "</tr>";
-        }
-        ?>
-      </table>
-    </div>
   </main>
 
 </body>

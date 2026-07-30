@@ -22,6 +22,11 @@
   <main>
     <h1>Practicantes</h1>
 
+    <div class="page-actions">
+      <a href="practicantes.php" class="active">Registrar</a>
+      <a href="practicantes_registros.php">Ver registros</a>
+    </div>
+
     <form class="form-card" method="POST">
       <label>Nombre<input name="nombre"></label>
       <label>Teléfono<input name="telefono"></label>
@@ -59,44 +64,10 @@
       );
       $stmt->execute();
       $stmt->close();
+      header("Location: practicantes_registros.php");
+      exit;
     }
     ?>
-
-    <div class="table-card">
-      <table>
-        <tr>
-          <th>Nombre</th>
-          <th>Teléfono</th>
-          <th>Correo</th>
-          <th>Dirección</th>
-          <th>Disciplina</th>
-          <th>Generación</th>
-          <th>Inicio</th>
-          <th>Fin</th>
-          <th>Cumpleaños</th>
-          <th>Contacto</th>
-          <th>Teléfono contacto</th>
-        </tr>
-        <?php
-        $res = $conn->query("SELECT * FROM practicantes");
-        while ($r = $res->fetch_assoc()) {
-          echo "<tr>"
-            . "<td>" . htmlspecialchars($r['nombre']) . "</td>"
-            . "<td>" . htmlspecialchars($r['telefono']) . "</td>"
-            . "<td>" . htmlspecialchars($r['correo']) . "</td>"
-            . "<td>" . htmlspecialchars($r['direccion']) . "</td>"
-            . "<td>" . htmlspecialchars($r['disciplina']) . "</td>"
-            . "<td>" . htmlspecialchars($r['generacion']) . "</td>"
-            . "<td>" . htmlspecialchars($r['inicio']) . "</td>"
-            . "<td>" . htmlspecialchars($r['fin']) . "</td>"
-            . "<td>" . htmlspecialchars($r['cumple']) . "</td>"
-            . "<td>" . htmlspecialchars($r['contacto']) . "</td>"
-            . "<td>" . htmlspecialchars($r['telefono_contacto']) . "</td>"
-            . "</tr>";
-        }
-        ?>
-      </table>
-    </div>
   </main>
 
 </body>

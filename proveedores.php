@@ -22,6 +22,11 @@
   <main>
     <h1>Proveedores</h1>
 
+    <div class="page-actions">
+      <a href="proveedores.php" class="active">Registrar</a>
+      <a href="proveedores_registros.php">Ver registros</a>
+    </div>
+
     <form class="form-card" method="POST">
       <label>País<input name="pais"></label>
       <label>Nombre<input name="nombre"></label>
@@ -44,32 +49,10 @@
       );
       $stmt->execute();
       $stmt->close();
+      header("Location: proveedores_registros.php");
+      exit;
     }
     ?>
-
-    <div class="table-card">
-      <table>
-        <tr>
-          <th>País</th>
-          <th>Nombre</th>
-          <th>Dirección</th>
-          <th>Teléfono</th>
-          <th>Correo</th>
-        </tr>
-        <?php
-        $r = $conn->query("SELECT * FROM proveedores");
-        while ($f = $r->fetch_assoc()) {
-          echo "<tr>"
-            . "<td>" . htmlspecialchars($f['pais']) . "</td>"
-            . "<td>" . htmlspecialchars($f['nombre']) . "</td>"
-            . "<td>" . htmlspecialchars($f['direccion']) . "</td>"
-            . "<td>" . htmlspecialchars($f['telefono']) . "</td>"
-            . "<td>" . htmlspecialchars($f['correo']) . "</td>"
-            . "</tr>";
-        }
-        ?>
-      </table>
-    </div>
   </main>
 
 </body>

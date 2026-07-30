@@ -22,6 +22,11 @@
   <main>
     <h1>Directivos</h1>
 
+    <div class="page-actions">
+      <a href="directivos.php" class="active">Registrar</a>
+      <a href="directivos_registros.php">Ver registros</a>
+    </div>
+
     <form class="form-card" method="POST">
       <label>Título<input name="titulo"></label>
       <label>Nombre<input name="nombre"></label>
@@ -60,48 +65,10 @@
       );
       $stmt->execute();
       $stmt->close();
+      header("Location: directivos_registros.php");
+      exit;
     }
     ?>
-
-    <div class="table-card">
-      <table>
-        <tr>
-          <th>Título</th>
-          <th>Nombre</th>
-          <th>Apellido</th>
-          <th>Cédula</th>
-          <th>Calidad</th>
-          <th>Estado</th>
-          <th>Entidad</th>
-          <th>Cargo</th>
-          <th>Celular</th>
-          <th>Teléfono</th>
-          <th>Correo</th>
-          <th>Integrante</th>
-          <th>Vigencia</th>
-        </tr>
-        <?php
-        $r = $conn->query("SELECT * FROM directivos");
-        while ($f = $r->fetch_assoc()) {
-          echo "<tr>"
-            . "<td>" . htmlspecialchars($f['titulo']) . "</td>"
-            . "<td>" . htmlspecialchars($f['nombre']) . "</td>"
-            . "<td>" . htmlspecialchars($f['apellido']) . "</td>"
-            . "<td>" . htmlspecialchars($f['cedula']) . "</td>"
-            . "<td>" . htmlspecialchars($f['calidad']) . "</td>"
-            . "<td>" . htmlspecialchars($f['estado']) . "</td>"
-            . "<td>" . htmlspecialchars($f['entidad']) . "</td>"
-            . "<td>" . htmlspecialchars($f['cargo']) . "</td>"
-            . "<td>" . htmlspecialchars($f['celular']) . "</td>"
-            . "<td>" . htmlspecialchars($f['telefono']) . "</td>"
-            . "<td>" . htmlspecialchars($f['correo']) . "</td>"
-            . "<td>" . htmlspecialchars($f['integrante']) . "</td>"
-            . "<td>" . htmlspecialchars($f['vigencia']) . "</td>"
-            . "</tr>";
-        }
-        ?>
-      </table>
-    </div>
   </main>
 
 </body>

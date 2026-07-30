@@ -22,6 +22,11 @@
   <main>
     <h1>Mercadeo</h1>
 
+    <div class="page-actions">
+      <a href="mercadeo.php" class="active">Registrar</a>
+      <a href="mercadeo_registros.php">Ver registros</a>
+    </div>
+
     <form class="form-card" method="POST">
       <label>Empresa<input name="empresa"></label>
       <label>Nombre<input name="nombre"></label>
@@ -54,42 +59,10 @@
       );
       $stmt->execute();
       $stmt->close();
+      header("Location: mercadeo_registros.php");
+      exit;
     }
     ?>
-
-    <div class="table-card">
-      <table>
-        <tr>
-          <th>Empresa</th>
-          <th>Nombre</th>
-          <th>Cargo</th>
-          <th>Tema</th>
-          <th>Contacto</th>
-          <th>Teléfono</th>
-          <th>Correo</th>
-          <th>Dirección</th>
-          <th>Proyecto</th>
-          <th>Patrocinio</th>
-        </tr>
-        <?php
-        $r = $conn->query("SELECT * FROM mercadeo");
-        while ($f = $r->fetch_assoc()) {
-          echo "<tr>"
-            . "<td>" . htmlspecialchars($f['empresa']) . "</td>"
-            . "<td>" . htmlspecialchars($f['nombre']) . "</td>"
-            . "<td>" . htmlspecialchars($f['cargo']) . "</td>"
-            . "<td>" . htmlspecialchars($f['tema']) . "</td>"
-            . "<td>" . htmlspecialchars($f['contacto']) . "</td>"
-            . "<td>" . htmlspecialchars($f['telefono']) . "</td>"
-            . "<td>" . htmlspecialchars($f['correo']) . "</td>"
-            . "<td>" . htmlspecialchars($f['direccion']) . "</td>"
-            . "<td>" . htmlspecialchars($f['proyecto']) . "</td>"
-            . "<td>" . htmlspecialchars($f['patrocinio']) . "</td>"
-            . "</tr>";
-        }
-        ?>
-      </table>
-    </div>
   </main>
 
 </body>
