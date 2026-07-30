@@ -1,4 +1,13 @@
-<?php require "auth.php"; ?>
+<?php
+/**
+ * Panel principal de SIRAD.
+ *
+ * Pagina de entrada del sistema tras iniciar sesion: muestra una
+ * tarjeta de acceso por cada uno de los once modulos del directorio.
+ * Requiere sesion activa (auth.php).
+ */
+require "auth.php";
+?>
 <!DOCTYPE html>
 <html lang="es">
 

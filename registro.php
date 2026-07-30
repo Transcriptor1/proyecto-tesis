@@ -1,4 +1,11 @@
 <?php
+/**
+ * Registro de usuario.
+ *
+ * Crea una cuenta nueva en la tabla `usuarios`, validando campos
+ * obligatorios, longitud minima de contrasena y correo duplicado. La
+ * contrasena se guarda encriptada con password_hash() (bcrypt).
+ */
 session_start();
 include "conexion.php";
 

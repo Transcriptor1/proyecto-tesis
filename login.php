@@ -1,4 +1,12 @@
 <?php
+/**
+ * Inicio de sesion.
+ *
+ * Verifica las credenciales del usuario contra la tabla `usuarios`
+ * mediante sentencia preparada y password_verify() (nunca se compara
+ * la contrasena en texto plano). Si son validas, crea la sesion y
+ * redirige a index.php.
+ */
 session_start();
 include "conexion.php";
 

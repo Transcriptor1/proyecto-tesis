@@ -1,4 +1,14 @@
-<?php require "auth.php"; include "conexion.php"; ?>
+<?php
+/**
+ * Modulo Instituciones Educativas - Registrar.
+ *
+ * Formulario de registro para la tabla `instituciones_e`. Inserta un nuevo
+ * registro mediante sentencia preparada (mysqli bind_param) y redirige
+ * a instituciones-e_registros.php tras guardar. Requiere sesion activa (auth.php).
+ */
+require "auth.php";
+include "conexion.php";
+?>
 <!DOCTYPE html>
 <html lang="es">
 

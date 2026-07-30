@@ -1,4 +1,14 @@
-<?php require "auth.php"; include "conexion.php"; ?>
+<?php
+/**
+ * Modulo Team - Ver registros.
+ *
+ * Consulta y muestra todos los registros de la tabla `team_pombo` en una
+ * tabla HTML, con la salida escapada (htmlspecialchars). Requiere
+ * sesion activa (auth.php).
+ */
+require "auth.php";
+include "conexion.php";
+?>
 <!DOCTYPE html>
 <html lang="es">
 

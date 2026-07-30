@@ -1,4 +1,14 @@
-<?php require "auth.php"; include "conexion.php"; ?>
+<?php
+/**
+ * Modulo Mercadeo - Registrar.
+ *
+ * Formulario de registro para la tabla `mercadeo`. Inserta un nuevo
+ * registro mediante sentencia preparada (mysqli bind_param) y redirige
+ * a mercadeo_registros.php tras guardar. Requiere sesion activa (auth.php).
+ */
+require "auth.php";
+include "conexion.php";
+?>
 <!DOCTYPE html>
 <html lang="es">
 

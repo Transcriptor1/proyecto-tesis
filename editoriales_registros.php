@@ -1,4 +1,14 @@
-<?php require "auth.php"; include "conexion.php"; ?>
+<?php
+/**
+ * Modulo Editoriales - Ver registros.
+ *
+ * Consulta y muestra todos los registros de la tabla `editoriales` en una
+ * tabla HTML, con la salida escapada (htmlspecialchars). Requiere
+ * sesion activa (auth.php).
+ */
+require "auth.php";
+include "conexion.php";
+?>
 <!DOCTYPE html>
 <html lang="es">
 
