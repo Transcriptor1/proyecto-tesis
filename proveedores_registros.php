@@ -8,6 +8,16 @@
  */
 require "auth.php";
 include "conexion.php";
+
+if (isset($_POST['eliminar_id'])) {
+    $stmt = $conn->prepare("DELETE FROM proveedores WHERE id = ?");
+    $id = (int) $_POST['eliminar_id'];
+    $stmt->bind_param("i", $id);
+    $stmt->execute();
+    $stmt->close();
+    header("Location: proveedores_registros.php");
+    exit;
+}
 ?>
 <!DOCTYPE html>
 <html lang="es">
@@ -45,6 +55,7 @@ include "conexion.php";
           <th>Dirección</th>
           <th>Teléfono</th>
           <th>Correo</th>
+          <th>Acciones</th>
         </tr>
         <?php
         $r = $conn->query("SELECT * FROM proveedores");
@@ -55,6 +66,10 @@ include "conexion.php";
             . "<td>" . htmlspecialchars($f['direccion']) . "</td>"
             . "<td>" . htmlspecialchars($f['telefono']) . "</td>"
             . "<td>" . htmlspecialchars($f['correo']) . "</td>"
+            . "<td><form method=\"POST\" onsubmit=\"return confirm('¿Eliminar este registro?');\">"
+            . "<input type=\"hidden\" name=\"eliminar_id\" value=\"" . (int) $f['id'] . "\">"
+            . "<button type=\"submit\" class=\"btn-delete\">Borrar</button>"
+            . "</form></td>"
             . "</tr>";
         }
         ?>

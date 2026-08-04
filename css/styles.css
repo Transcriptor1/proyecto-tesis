@@ -153,6 +153,21 @@ tbody tr:hover td {
     background: #f9fafb;
 }
 
+.btn-delete {
+    background: #ef4444;
+    color: white;
+    border: none;
+    border-radius: 6px;
+    padding: 6px 12px;
+    font-size: 13px;
+    font-weight: 600;
+    cursor: pointer;
+}
+
+.btn-delete:hover {
+    background: #dc2626;
+}
+
 .auth-page {
     min-height: 100vh;
     display: flex;

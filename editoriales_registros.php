@@ -8,6 +8,16 @@
  */
 require "auth.php";
 include "conexion.php";
+
+if (isset($_POST['eliminar_id'])) {
+    $stmt = $conn->prepare("DELETE FROM editoriales WHERE id = ?");
+    $id = (int) $_POST['eliminar_id'];
+    $stmt->bind_param("i", $id);
+    $stmt->execute();
+    $stmt->close();
+    header("Location: editoriales_registros.php");
+    exit;
+}
 ?>
 <!DOCTYPE html>
 <html lang="es">
@@ -47,6 +57,7 @@ include "conexion.php";
           <th>Dirección</th>
           <th>Correo</th>
           <th>Descuento</th>
+          <th>Acciones</th>
         </tr>
         <?php
         $r = $conn->query("SELECT * FROM editoriales");
@@ -59,6 +70,10 @@ include "conexion.php";
             . "<td>" . htmlspecialchars($f['direccion']) . "</td>"
             . "<td>" . htmlspecialchars($f['correo']) . "</td>"
             . "<td>" . htmlspecialchars($f['descuento']) . "</td>"
+            . "<td><form method=\"POST\" onsubmit=\"return confirm('¿Eliminar este registro?');\">"
+            . "<input type=\"hidden\" name=\"eliminar_id\" value=\"" . (int) $f['id'] . "\">"
+            . "<button type=\"submit\" class=\"btn-delete\">Borrar</button>"
+            . "</form></td>"
             . "</tr>";
         }
         ?>

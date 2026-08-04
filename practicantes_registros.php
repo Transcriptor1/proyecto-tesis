@@ -8,6 +8,16 @@
  */
 require "auth.php";
 include "conexion.php";
+
+if (isset($_POST['eliminar_id'])) {
+    $stmt = $conn->prepare("DELETE FROM practicantes WHERE id = ?");
+    $id = (int) $_POST['eliminar_id'];
+    $stmt->bind_param("i", $id);
+    $stmt->execute();
+    $stmt->close();
+    header("Location: practicantes_registros.php");
+    exit;
+}
 ?>
 <!DOCTYPE html>
 <html lang="es">
@@ -51,6 +61,7 @@ include "conexion.php";
           <th>Cumpleaños</th>
           <th>Contacto</th>
           <th>Teléfono contacto</th>
+          <th>Acciones</th>
         </tr>
         <?php
         $res = $conn->query("SELECT * FROM practicantes");
@@ -67,6 +78,10 @@ include "conexion.php";
             . "<td>" . htmlspecialchars($r['cumple']) . "</td>"
             . "<td>" . htmlspecialchars($r['contacto']) . "</td>"
             . "<td>" . htmlspecialchars($r['telefono_contacto']) . "</td>"
+            . "<td><form method=\"POST\" onsubmit=\"return confirm('¿Eliminar este registro?');\">"
+            . "<input type=\"hidden\" name=\"eliminar_id\" value=\"" . (int) $r['id'] . "\">"
+            . "<button type=\"submit\" class=\"btn-delete\">Borrar</button>"
+            . "</form></td>"
             . "</tr>";
         }
         ?>

@@ -8,6 +8,16 @@
  */
 require "auth.php";
 include "conexion.php";
+
+if (isset($_POST['eliminar_id'])) {
+    $stmt = $conn->prepare("DELETE FROM team_pombo WHERE id = ?");
+    $id = (int) $_POST['eliminar_id'];
+    $stmt->bind_param("i", $id);
+    $stmt->execute();
+    $stmt->close();
+    header("Location: team_registros.php");
+    exit;
+}
 ?>
 <!DOCTYPE html>
 <html lang="es">
@@ -50,6 +60,7 @@ include "conexion.php";
           <th>Teléfono</th>
           <th>Inicio</th>
           <th>Fin</th>
+          <th>Acciones</th>
         </tr>
         <?php
         $r = $conn->query("SELECT * FROM team_pombo");
@@ -65,6 +76,10 @@ include "conexion.php";
             . "<td>" . htmlspecialchars($f['telefono']) . "</td>"
             . "<td>" . htmlspecialchars($f['inicio']) . "</td>"
             . "<td>" . htmlspecialchars($f['fin']) . "</td>"
+            . "<td><form method=\"POST\" onsubmit=\"return confirm('¿Eliminar este registro?');\">"
+            . "<input type=\"hidden\" name=\"eliminar_id\" value=\"" . (int) $f['id'] . "\">"
+            . "<button type=\"submit\" class=\"btn-delete\">Borrar</button>"
+            . "</form></td>"
             . "</tr>";
         }
         ?>
