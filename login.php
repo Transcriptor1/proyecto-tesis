@@ -43,6 +43,7 @@ if ($_POST) {
     <meta charset="UTF-8">
     <title>Iniciar sesión - SIRAD</title>
     <link rel="stylesheet" href="css/styles.css">
+  <script src="js/animations.js" defer></script>
 </head>
 
 <body>

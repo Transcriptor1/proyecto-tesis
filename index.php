@@ -14,6 +14,7 @@ require "auth.php";
 <head>
     <meta charset="UTF-8">
     <title>SIRAD - Sistema de Registro y Administración de Directorios</title>
+    <script src="js/animations.js" defer></script>
 
     <style>
         * {
@@ -23,33 +24,37 @@ require "auth.php";
 
         body {
             margin: 0;
-            background-color: #f4f6fb;
+            background:
+                radial-gradient(circle at 15% 0%, rgba(99, 102, 241, 0.08), transparent 40%),
+                radial-gradient(circle at 85% 10%, rgba(37, 99, 235, 0.08), transparent 40%),
+                #f4f6fb;
             color: #1f2937;
         }
 
         header {
-            background-color: #2563eb;
+            background: linear-gradient(120deg, #1d4ed8, #4338ca, #2563eb);
+            background-size: 220% 220%;
             color: white;
             padding: 20px 40px;
             display: flex;
             justify-content: space-between;
             align-items: center;
+            position: sticky;
+            top: 0;
+            z-index: 100;
+            box-shadow: 0 4px 18px rgba(30, 64, 175, 0.28);
         }
 
         header .logo {
             font-size: 18px;
             font-weight: bold;
+            letter-spacing: 0.3px;
+            display: inline-block;
+            transition: transform 0.25s ease;
         }
 
-        header nav a {
-            color: white;
-            text-decoration: none;
-            margin-left: 20px;
-            font-weight: 500;
-        }
-
-        header nav a:hover {
-            text-decoration: underline;
+        header .logo:hover {
+            transform: scale(1.05);
         }
 
         .header-actions {
@@ -59,10 +64,45 @@ require "auth.php";
             font-size: 14px;
         }
 
+        .header-actions a {
+            position: relative;
+            color: white;
+            text-decoration: none;
+            font-weight: 500;
+            transition: opacity 0.2s ease;
+        }
+
+        .header-actions a::after {
+            content: "";
+            position: absolute;
+            left: 0;
+            bottom: -5px;
+            width: 0;
+            height: 2px;
+            background: white;
+            border-radius: 2px;
+            transition: width 0.3s ease;
+        }
+
+        .header-actions a:hover {
+            opacity: 0.95;
+        }
+
+        .header-actions a:hover::after {
+            width: 100%;
+        }
+
         h1 {
             text-align: center;
-            margin: 40px 20px;
+            margin: 40px 20px 6px;
             font-size: 32px;
+        }
+
+        .subtitle {
+            text-align: center;
+            margin: 0 20px 40px;
+            color: #6b7280;
+            font-size: 15px;
         }
 
         .container {
@@ -75,16 +115,39 @@ require "auth.php";
         }
 
         .card {
+            position: relative;
+            overflow: hidden;
             background: white;
             border-radius: 14px;
             padding: 30px;
             box-shadow: 0 8px 20px rgba(0, 0, 0, 0.08);
             text-align: center;
+            transition: transform 0.25s ease, box-shadow 0.25s ease;
+        }
+
+        .card::before {
+            content: "";
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            height: 4px;
+            background: linear-gradient(90deg, #2563eb, #6366f1, #ec4899);
+        }
+
+        .card:hover {
+            transform: translateY(-6px);
+            box-shadow: 0 16px 30px rgba(0, 0, 0, 0.14);
         }
 
         .icon {
             font-size: 40px;
             margin-bottom: 15px;
+            transition: transform 0.25s ease;
+        }
+
+        .card:hover .icon {
+            transform: scale(1.15) rotate(-4deg);
         }
 
         .card h3 {
@@ -105,6 +168,12 @@ require "auth.php";
             color: white;
             font-weight: bold;
             text-decoration: none;
+            transition: transform 0.2s ease, box-shadow 0.2s ease;
+        }
+
+        .card a:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 8px 16px rgba(0, 0, 0, 0.2);
         }
 
         .blue {
@@ -169,15 +238,9 @@ require "auth.php";
 
     <header>
         <div class="logo">
-            SIRAD<br>
+            🗂️ SIRAD<br>
             <small>Sistema de Registro y Administración de Directorios</small>
         </div>
-        <nav>
-            <a href="instituciones-e.php">Instituciones</a>
-            <a href="practicantes.php">Practicantes</a>
-            <a href="artistas.php">Artistas</a>
-            <a href="team.php">Team</a>
-        </nav>
         <div class="header-actions">
             <span>Hola, <?= htmlspecialchars($_SESSION['usuario_nombre']) ?></span>
             <a href="logout.php">Cerrar sesión</a>
@@ -185,6 +248,7 @@ require "auth.php";
     </header>
 
     <h1>SIRAD</h1>
+    <p class="subtitle">Selecciona un módulo para registrar o consultar información institucional</p>
 
     <div class="container">
 

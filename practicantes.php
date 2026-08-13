@@ -16,6 +16,7 @@ include "conexion.php";
   <meta charset="UTF-8">
   <title>Practicantes - SIRAD</title>
   <link rel="stylesheet" href="css/styles.css">
+  <script src="js/animations.js" defer></script>
 </head>
 
 <body>

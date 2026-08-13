@@ -53,6 +53,7 @@ if ($_POST) {
     <meta charset="UTF-8">
     <title>Crear usuario - SIRAD</title>
     <link rel="stylesheet" href="css/styles.css">
+  <script src="js/animations.js" defer></script>
 </head>
 
 <body>

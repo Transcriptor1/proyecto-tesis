@@ -10,27 +10,57 @@ body {
 }
 
 header {
-    background-color: #2563eb;
+    background: linear-gradient(120deg, #1d4ed8, #4338ca, #2563eb);
+    background-size: 220% 220%;
     color: white;
     padding: 18px 40px;
     display: flex;
     justify-content: space-between;
     align-items: center;
+    position: sticky;
+    top: 0;
+    z-index: 100;
+    box-shadow: 0 4px 18px rgba(30, 64, 175, 0.28);
 }
 
 header .logo {
     font-size: 16px;
     font-weight: bold;
+    letter-spacing: 0.3px;
+    transition: transform 0.25s ease;
+    display: inline-block;
+}
+
+header .logo:hover {
+    transform: scale(1.06);
 }
 
 header a {
+    position: relative;
     color: white;
     text-decoration: none;
     font-weight: 500;
+    transition: opacity 0.2s ease;
+}
+
+header a::after {
+    content: "";
+    position: absolute;
+    left: 0;
+    bottom: -5px;
+    width: 0;
+    height: 2px;
+    background: white;
+    border-radius: 2px;
+    transition: width 0.3s ease;
 }
 
 header a:hover {
-    text-decoration: underline;
+    opacity: 0.95;
+}
+
+header a:hover::after {
+    width: 100%;
 }
 
 .header-actions {
@@ -49,6 +79,8 @@ main {
 h1 {
     font-size: 26px;
     margin: 0 0 20px;
+    padding-left: 14px;
+    border-left: 5px solid #2563eb;
 }
 
 .page-actions {
@@ -66,10 +98,13 @@ h1 {
     font-weight: 600;
     font-size: 14px;
     border: 1px solid #d1d5db;
+    transition: transform 0.2s ease, box-shadow 0.2s ease, border-color 0.2s ease;
 }
 
 .page-actions a:hover {
     border-color: #2563eb;
+    transform: translateY(-2px);
+    box-shadow: 0 6px 14px rgba(37, 99, 235, 0.18);
 }
 
 .page-actions a.active {
@@ -87,6 +122,16 @@ h1 {
     grid-template-columns: repeat(auto-fit, minmax(180px, 1fr));
     gap: 14px;
     margin-bottom: 30px;
+}
+
+.form-card input {
+    transition: border-color 0.2s ease, box-shadow 0.2s ease;
+}
+
+.form-card input:focus {
+    outline: none;
+    border-color: #2563eb;
+    box-shadow: 0 0 0 3px rgba(37, 99, 235, 0.15);
 }
 
 .form-card label {
@@ -117,10 +162,13 @@ h1 {
     font-weight: bold;
     font-size: 15px;
     cursor: pointer;
+    transition: transform 0.2s ease, background 0.2s ease, box-shadow 0.2s ease;
 }
 
 .form-card button:hover {
     background: #1d4ed8;
+    transform: translateY(-2px);
+    box-shadow: 0 8px 16px rgba(37, 99, 235, 0.25);
 }
 
 .table-card {
@@ -149,6 +197,10 @@ th {
     color: #374151;
 }
 
+tbody tr td {
+    transition: background 0.15s ease;
+}
+
 tbody tr:hover td {
     background: #f9fafb;
 }
@@ -162,10 +214,12 @@ tbody tr:hover td {
     font-size: 13px;
     font-weight: 600;
     cursor: pointer;
+    transition: transform 0.2s ease, background 0.2s ease;
 }
 
 .btn-delete:hover {
     background: #dc2626;
+    transform: translateY(-1px) scale(1.04);
 }
 
 .auth-page {
@@ -174,6 +228,7 @@ tbody tr:hover td {
     align-items: center;
     justify-content: center;
     padding: 20px;
+    background: linear-gradient(135deg, #eef2ff 0%, #f4f6fb 45%, #e0e7ff 100%);
 }
 
 .auth-card {
