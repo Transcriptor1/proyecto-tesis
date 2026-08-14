@@ -47,6 +47,7 @@ if (isset($_GET['id'])) {
     <div class="page-actions">
       <a href="team.php" class="active">Registrar</a>
       <a href="team_registros.php">Ver registros</a>
+      <a href="team_exportar.php">Descargar Excel</a>
     </div>
 
     <?php if ($editando): ?>

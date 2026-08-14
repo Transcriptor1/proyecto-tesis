@@ -47,15 +47,7 @@ if (isset($_POST['eliminar_id'])) {
     <div class="page-actions">
       <a href="proveedores.php">Registrar</a>
       <a href="proveedores_registros.php" class="active">Ver registros</a>
-    </div>
-
-    <div class="export-bar">
-      <form method="GET" action="exportar.php">
-        <input type="hidden" name="modulo" value="proveedores">
-        <label>Desde<input type="date" name="desde" required></label>
-        <label>Hasta<input type="date" name="hasta" required></label>
-        <button type="submit">Descargar Excel</button>
-      </form>
+      <a href="proveedores_exportar.php">Descargar Excel</a>
     </div>
 
     <div class="table-card">
