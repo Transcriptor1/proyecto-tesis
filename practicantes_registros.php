@@ -3,8 +3,9 @@
  * Modulo Practicantes - Ver registros.
  *
  * Consulta y muestra todos los registros de la tabla `practicantes` en una
- * tabla HTML, con la salida escapada (htmlspecialchars). Requiere
- * sesion activa (auth.php).
+ * tabla HTML, con la salida escapada (htmlspecialchars). Permite editar
+ * o eliminar cada registro individualmente, y exportar un rango de
+ * fechas a Excel (exportar.php). Requiere sesion activa (auth.php).
  */
 require "auth.php";
 include "conexion.php";
@@ -48,6 +49,15 @@ if (isset($_POST['eliminar_id'])) {
       <a href="practicantes_registros.php" class="active">Ver registros</a>
     </div>
 
+    <div class="export-bar">
+      <form method="GET" action="exportar.php">
+        <input type="hidden" name="modulo" value="practicantes">
+        <label>Desde<input type="date" name="desde" required></label>
+        <label>Hasta<input type="date" name="hasta" required></label>
+        <button type="submit">Descargar Excel</button>
+      </form>
+    </div>
+
     <div class="table-card">
       <table>
         <tr>
@@ -57,30 +67,32 @@ if (isset($_POST['eliminar_id'])) {
           <th>Dirección</th>
           <th>Disciplina</th>
           <th>Generación</th>
-          <th>Inicio</th>
-          <th>Fin</th>
+          <th>Fecha inicio</th>
+          <th>Fecha fin</th>
           <th>Cumpleaños</th>
-          <th>Contacto</th>
+          <th>Contacto de emergencia</th>
           <th>Teléfono contacto</th>
           <th>Acciones</th>
         </tr>
         <?php
-        $res = $conn->query("SELECT * FROM practicantes");
-        while ($r = $res->fetch_assoc()) {
+        $r = $conn->query("SELECT * FROM practicantes");
+        while ($f = $r->fetch_assoc()) {
           echo "<tr>"
-            . "<td>" . htmlspecialchars($r['nombre']) . "</td>"
-            . "<td>" . htmlspecialchars($r['telefono']) . "</td>"
-            . "<td>" . htmlspecialchars($r['correo']) . "</td>"
-            . "<td>" . htmlspecialchars($r['direccion']) . "</td>"
-            . "<td>" . htmlspecialchars($r['disciplina']) . "</td>"
-            . "<td>" . htmlspecialchars($r['generacion']) . "</td>"
-            . "<td>" . htmlspecialchars($r['inicio']) . "</td>"
-            . "<td>" . htmlspecialchars($r['fin']) . "</td>"
-            . "<td>" . htmlspecialchars($r['cumple']) . "</td>"
-            . "<td>" . htmlspecialchars($r['contacto']) . "</td>"
-            . "<td>" . htmlspecialchars($r['telefono_contacto']) . "</td>"
-            . "<td><form method=\"POST\" onsubmit=\"return confirm('¿Eliminar este registro?');\">"
-            . "<input type=\"hidden\" name=\"eliminar_id\" value=\"" . (int) $r['id'] . "\">"
+            . "<td>" . htmlspecialchars($f['nombre']) . "</td>"
+            . "<td>" . htmlspecialchars($f['telefono']) . "</td>"
+            . "<td>" . htmlspecialchars($f['correo']) . "</td>"
+            . "<td>" . htmlspecialchars($f['direccion']) . "</td>"
+            . "<td>" . htmlspecialchars($f['disciplina']) . "</td>"
+            . "<td>" . htmlspecialchars($f['generacion']) . "</td>"
+            . "<td>" . htmlspecialchars($f['inicio']) . "</td>"
+            . "<td>" . htmlspecialchars($f['fin']) . "</td>"
+            . "<td>" . htmlspecialchars($f['cumple']) . "</td>"
+            . "<td>" . htmlspecialchars($f['contacto']) . "</td>"
+            . "<td>" . htmlspecialchars($f['telefono_contacto']) . "</td>"
+            . "<td>"
+            . "<a href=\"practicantes.php?id=" . (int) $f['id'] . "\" class=\"btn-edit\">Editar</a>"
+            . "<form method=\"POST\" style=\"display:inline\" onsubmit=\"return confirm('&iquest;Eliminar este registro?');\">"
+            . "<input type=\"hidden\" name=\"eliminar_id\" value=\"" . (int) $f['id'] . "\">"
             . "<button type=\"submit\" class=\"btn-delete\">Borrar</button>"
             . "</form></td>"
             . "</tr>";

@@ -2,12 +2,23 @@
 /**
  * Modulo Asocajas - Registrar.
  *
- * Formulario de registro para la tabla `asocajas`. Inserta un nuevo
- * registro mediante sentencia preparada (mysqli bind_param) y redirige
- * a asocajas_registros.php tras guardar. Requiere sesion activa (auth.php).
+ * Formulario de registro y edicion para la tabla `asocajas`. Inserta un
+ * nuevo registro o actualiza uno existente (parametro GET "id") mediante
+ * sentencias preparadas (mysqli bind_param) y redirige a
+ * asocajas_registros.php tras guardar. Requiere sesion activa (auth.php).
  */
 require "auth.php";
 include "conexion.php";
+
+$editando = null;
+if (isset($_GET['id'])) {
+  $stmt = $conn->prepare("SELECT * FROM asocajas WHERE id = ?");
+  $id = (int) $_GET['id'];
+  $stmt->bind_param("i", $id);
+  $stmt->execute();
+  $editando = $stmt->get_result()->fetch_assoc();
+  $stmt->close();
+}
 ?>
 <!DOCTYPE html>
 <html lang="es">
@@ -38,30 +49,34 @@ include "conexion.php";
       <a href="asocajas_registros.php">Ver registros</a>
     </div>
 
+    <?php if ($editando): ?>
+      <p class="edit-notice">Editando registro #<?= (int) $editando['id'] ?> &mdash; <a href="asocajas.php">Cancelar</a></p>
+    <?php endif; ?>
+
     <form class="form-card" method="POST">
-      <label>Caja<input name="caja"></label>
-      <label>Departamento<input name="departamento"></label>
-      <label>Cargo<input name="cargo"></label>
-      <label>Contacto<input name="contacto"></label>
-      <label>Teléfono<input name="telefono"></label>
-      <label>Dirección<input name="direccion"></label>
-      <label>Correo<input name="correo"></label>
-      <button>Guardar</button>
+      <?php if ($editando): ?>
+        <input type="hidden" name="id" value="<?= (int) $editando['id'] ?>">
+      <?php endif; ?>
+      <label>Caja<input name="caja" value="<?= htmlspecialchars($editando['caja'] ?? '') ?>"></label>
+      <label>Departamento<input name="departamento" value="<?= htmlspecialchars($editando['departamento'] ?? '') ?>"></label>
+      <label>Cargo<input name="cargo" value="<?= htmlspecialchars($editando['cargo'] ?? '') ?>"></label>
+      <label>Contacto<input name="contacto" value="<?= htmlspecialchars($editando['contacto'] ?? '') ?>"></label>
+      <label>Teléfono<input name="telefono" value="<?= htmlspecialchars($editando['telefono'] ?? '') ?>"></label>
+      <label>Dirección<input name="direccion" value="<?= htmlspecialchars($editando['direccion'] ?? '') ?>"></label>
+      <label>Correo<input name="correo" value="<?= htmlspecialchars($editando['correo'] ?? '') ?>"></label>
+      <button><?= $editando ? 'Actualizar' : 'Guardar' ?></button>
     </form>
 
     <?php
     if ($_POST) {
-      $stmt = $conn->prepare("INSERT INTO asocajas (caja, departamento, cargo, contacto, telefono, direccion, correo) VALUES (?, ?, ?, ?, ?, ?, ?)");
-      $stmt->bind_param(
-        "sssssss",
-        $_POST['caja'],
-        $_POST['departamento'],
-        $_POST['cargo'],
-        $_POST['contacto'],
-        $_POST['telefono'],
-        $_POST['direccion'],
-        $_POST['correo']
-      );
+      if (!empty($_POST['id'])) {
+        $id = (int) $_POST['id'];
+        $stmt = $conn->prepare("UPDATE asocajas SET caja = ?, departamento = ?, cargo = ?, contacto = ?, telefono = ?, direccion = ?, correo = ? WHERE id = ?");
+        $stmt->bind_param("sssssssi", $_POST['caja'], $_POST['departamento'], $_POST['cargo'], $_POST['contacto'], $_POST['telefono'], $_POST['direccion'], $_POST['correo'], $id);
+      } else {
+        $stmt = $conn->prepare("INSERT INTO asocajas (caja, departamento, cargo, contacto, telefono, direccion, correo) VALUES (?, ?, ?, ?, ?, ?, ?)");
+        $stmt->bind_param("sssssss", $_POST['caja'], $_POST['departamento'], $_POST['cargo'], $_POST['contacto'], $_POST['telefono'], $_POST['direccion'], $_POST['correo']);
+      }
       $stmt->execute();
       $stmt->close();
       header("Location: asocajas_registros.php");

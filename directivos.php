@@ -2,12 +2,23 @@
 /**
  * Modulo Directivos - Registrar.
  *
- * Formulario de registro para la tabla `directivos`. Inserta un nuevo
- * registro mediante sentencia preparada (mysqli bind_param) y redirige
- * a directivos_registros.php tras guardar. Requiere sesion activa (auth.php).
+ * Formulario de registro y edicion para la tabla `directivos`. Inserta un
+ * nuevo registro o actualiza uno existente (parametro GET "id") mediante
+ * sentencias preparadas (mysqli bind_param) y redirige a
+ * directivos_registros.php tras guardar. Requiere sesion activa (auth.php).
  */
 require "auth.php";
 include "conexion.php";
+
+$editando = null;
+if (isset($_GET['id'])) {
+  $stmt = $conn->prepare("SELECT * FROM directivos WHERE id = ?");
+  $id = (int) $_GET['id'];
+  $stmt->bind_param("i", $id);
+  $stmt->execute();
+  $editando = $stmt->get_result()->fetch_assoc();
+  $stmt->close();
+}
 ?>
 <!DOCTYPE html>
 <html lang="es">
@@ -38,42 +49,40 @@ include "conexion.php";
       <a href="directivos_registros.php">Ver registros</a>
     </div>
 
+    <?php if ($editando): ?>
+      <p class="edit-notice">Editando registro #<?= (int) $editando['id'] ?> &mdash; <a href="directivos.php">Cancelar</a></p>
+    <?php endif; ?>
+
     <form class="form-card" method="POST">
-      <label>Título<input name="titulo"></label>
-      <label>Nombre<input name="nombre"></label>
-      <label>Apellido<input name="apellido"></label>
-      <label>Cédula<input name="cedula"></label>
-      <label>Calidad<input name="calidad"></label>
-      <label>Estado<input name="estado"></label>
-      <label>Entidad<input name="entidad"></label>
-      <label>Cargo<input name="cargo"></label>
-      <label>Celular<input name="celular"></label>
-      <label>Teléfono<input name="telefono"></label>
-      <label>Correo<input name="correo"></label>
-      <label>Integrante<input name="integrante"></label>
-      <label>Vigencia<input name="vigencia"></label>
-      <button>Guardar</button>
+      <?php if ($editando): ?>
+        <input type="hidden" name="id" value="<?= (int) $editando['id'] ?>">
+      <?php endif; ?>
+      <label>Título<input name="titulo" value="<?= htmlspecialchars($editando['titulo'] ?? '') ?>"></label>
+      <label>Nombre<input name="nombre" value="<?= htmlspecialchars($editando['nombre'] ?? '') ?>"></label>
+      <label>Apellido<input name="apellido" value="<?= htmlspecialchars($editando['apellido'] ?? '') ?>"></label>
+      <label>Cédula<input name="cedula" value="<?= htmlspecialchars($editando['cedula'] ?? '') ?>"></label>
+      <label>Calidad<input name="calidad" value="<?= htmlspecialchars($editando['calidad'] ?? '') ?>"></label>
+      <label>Estado<input name="estado" value="<?= htmlspecialchars($editando['estado'] ?? '') ?>"></label>
+      <label>Entidad<input name="entidad" value="<?= htmlspecialchars($editando['entidad'] ?? '') ?>"></label>
+      <label>Cargo<input name="cargo" value="<?= htmlspecialchars($editando['cargo'] ?? '') ?>"></label>
+      <label>Celular<input name="celular" value="<?= htmlspecialchars($editando['celular'] ?? '') ?>"></label>
+      <label>Teléfono<input name="telefono" value="<?= htmlspecialchars($editando['telefono'] ?? '') ?>"></label>
+      <label>Correo<input name="correo" value="<?= htmlspecialchars($editando['correo'] ?? '') ?>"></label>
+      <label>Integrante<input name="integrante" value="<?= htmlspecialchars($editando['integrante'] ?? '') ?>"></label>
+      <label>Vigencia<input name="vigencia" value="<?= htmlspecialchars($editando['vigencia'] ?? '') ?>"></label>
+      <button><?= $editando ? 'Actualizar' : 'Guardar' ?></button>
     </form>
 
     <?php
     if ($_POST) {
-      $stmt = $conn->prepare("INSERT INTO directivos (titulo, nombre, apellido, cedula, calidad, estado, entidad, cargo, celular, telefono, correo, integrante, vigencia) VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)");
-      $stmt->bind_param(
-        "sssssssssssss",
-        $_POST['titulo'],
-        $_POST['nombre'],
-        $_POST['apellido'],
-        $_POST['cedula'],
-        $_POST['calidad'],
-        $_POST['estado'],
-        $_POST['entidad'],
-        $_POST['cargo'],
-        $_POST['celular'],
-        $_POST['telefono'],
-        $_POST['correo'],
-        $_POST['integrante'],
-        $_POST['vigencia']
-      );
+      if (!empty($_POST['id'])) {
+        $id = (int) $_POST['id'];
+        $stmt = $conn->prepare("UPDATE directivos SET titulo = ?, nombre = ?, apellido = ?, cedula = ?, calidad = ?, estado = ?, entidad = ?, cargo = ?, celular = ?, telefono = ?, correo = ?, integrante = ?, vigencia = ? WHERE id = ?");
+        $stmt->bind_param("sssssssssssssi", $_POST['titulo'], $_POST['nombre'], $_POST['apellido'], $_POST['cedula'], $_POST['calidad'], $_POST['estado'], $_POST['entidad'], $_POST['cargo'], $_POST['celular'], $_POST['telefono'], $_POST['correo'], $_POST['integrante'], $_POST['vigencia'], $id);
+      } else {
+        $stmt = $conn->prepare("INSERT INTO directivos (titulo, nombre, apellido, cedula, calidad, estado, entidad, cargo, celular, telefono, correo, integrante, vigencia) VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)");
+        $stmt->bind_param("sssssssssssss", $_POST['titulo'], $_POST['nombre'], $_POST['apellido'], $_POST['cedula'], $_POST['calidad'], $_POST['estado'], $_POST['entidad'], $_POST['cargo'], $_POST['celular'], $_POST['telefono'], $_POST['correo'], $_POST['integrante'], $_POST['vigencia']);
+      }
       $stmt->execute();
       $stmt->close();
       header("Location: directivos_registros.php");

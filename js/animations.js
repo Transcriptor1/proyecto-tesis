@@ -33,6 +33,7 @@ function animarEntrada() {
     { selector: "h1", retardoBase: 0 },
     { selector: ".subtitle", retardoBase: 80 },
     { selector: ".form-card", retardoBase: 0 },
+    { selector: ".export-bar", retardoBase: 0 },
     { selector: ".table-card", retardoBase: 0 },
     { selector: ".auth-card", retardoBase: 0 },
   ];

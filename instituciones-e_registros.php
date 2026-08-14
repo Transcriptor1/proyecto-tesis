@@ -3,8 +3,9 @@
  * Modulo Instituciones Educativas - Ver registros.
  *
  * Consulta y muestra todos los registros de la tabla `instituciones_e` en una
- * tabla HTML, con la salida escapada (htmlspecialchars). Requiere
- * sesion activa (auth.php).
+ * tabla HTML, con la salida escapada (htmlspecialchars). Permite editar
+ * o eliminar cada registro individualmente, y exportar un rango de
+ * fechas a Excel (exportar.php). Requiere sesion activa (auth.php).
  */
 require "auth.php";
 include "conexion.php";
@@ -48,6 +49,15 @@ if (isset($_POST['eliminar_id'])) {
       <a href="instituciones-e_registros.php" class="active">Ver registros</a>
     </div>
 
+    <div class="export-bar">
+      <form method="GET" action="exportar.php">
+        <input type="hidden" name="modulo" value="instituciones-e">
+        <label>Desde<input type="date" name="desde" required></label>
+        <label>Hasta<input type="date" name="hasta" required></label>
+        <button type="submit">Descargar Excel</button>
+      </form>
+    </div>
+
     <div class="table-card">
       <table>
         <tr>
@@ -79,7 +89,9 @@ if (isset($_POST['eliminar_id'])) {
             . "<td>" . htmlspecialchars($f['direccion']) . "</td>"
             . "<td>" . htmlspecialchars($f['correo']) . "</td>"
             . "<td>" . htmlspecialchars($f['ciudad']) . "</td>"
-            . "<td><form method=\"POST\" onsubmit=\"return confirm('¿Eliminar este registro?');\">"
+            . "<td>"
+            . "<a href=\"instituciones-e.php?id=" . (int) $f['id'] . "\" class=\"btn-edit\">Editar</a>"
+            . "<form method=\"POST\" style=\"display:inline\" onsubmit=\"return confirm('&iquest;Eliminar este registro?');\">"
             . "<input type=\"hidden\" name=\"eliminar_id\" value=\"" . (int) $f['id'] . "\">"
             . "<button type=\"submit\" class=\"btn-delete\">Borrar</button>"
             . "</form></td>"

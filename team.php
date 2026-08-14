@@ -2,12 +2,23 @@
 /**
  * Modulo Team - Registrar.
  *
- * Formulario de registro para la tabla `team_pombo`. Inserta un nuevo
- * registro mediante sentencia preparada (mysqli bind_param) y redirige
- * a team_registros.php tras guardar. Requiere sesion activa (auth.php).
+ * Formulario de registro y edicion para la tabla `team_pombo`. Inserta un
+ * nuevo registro o actualiza uno existente (parametro GET "id") mediante
+ * sentencias preparadas (mysqli bind_param) y redirige a
+ * team_registros.php tras guardar. Requiere sesion activa (auth.php).
  */
 require "auth.php";
 include "conexion.php";
+
+$editando = null;
+if (isset($_GET['id'])) {
+  $stmt = $conn->prepare("SELECT * FROM team_pombo WHERE id = ?");
+  $id = (int) $_GET['id'];
+  $stmt->bind_param("i", $id);
+  $stmt->execute();
+  $editando = $stmt->get_result()->fetch_assoc();
+  $stmt->close();
+}
 ?>
 <!DOCTYPE html>
 <html lang="es">
@@ -38,39 +49,37 @@ include "conexion.php";
       <a href="team_registros.php">Ver registros</a>
     </div>
 
+    <?php if ($editando): ?>
+      <p class="edit-notice">Editando registro #<?= (int) $editando['id'] ?> &mdash; <a href="team.php">Cancelar</a></p>
+    <?php endif; ?>
+
     <form class="form-card" method="POST">
-      <label>Nombre<input name="nombre"></label>
-      <label>Apellido<input name="apellido"></label>
-      <label>Celular<input name="celular"></label>
-      <label>Correo<input name="correo"></label>
-      <label>Cargo<input name="cargo"></label>
-      <label>Cumpleaños<input name="cumple" type="date"></label>
-      <label>Contacto de emergencia<input name="contacto"></label>
-      <label>Teléfono<input name="telefono"></label>
-      <label>Fecha inicio<input name="inicio" type="date"></label>
-      <label>Fecha fin<input name="fin" type="date"></label>
-      <button>Guardar</button>
+      <?php if ($editando): ?>
+        <input type="hidden" name="id" value="<?= (int) $editando['id'] ?>">
+      <?php endif; ?>
+      <label>Nombre<input name="nombre" value="<?= htmlspecialchars($editando['nombre'] ?? '') ?>"></label>
+      <label>Apellido<input name="apellido" value="<?= htmlspecialchars($editando['apellido'] ?? '') ?>"></label>
+      <label>Celular<input name="celular" value="<?= htmlspecialchars($editando['celular'] ?? '') ?>"></label>
+      <label>Correo<input name="correo" value="<?= htmlspecialchars($editando['correo'] ?? '') ?>"></label>
+      <label>Cargo<input name="cargo" value="<?= htmlspecialchars($editando['cargo'] ?? '') ?>"></label>
+      <label>Cumpleaños<input name="cumple" type="date" value="<?= htmlspecialchars($editando['cumple'] ?? '') ?>"></label>
+      <label>Contacto de emergencia<input name="contacto" value="<?= htmlspecialchars($editando['contacto'] ?? '') ?>"></label>
+      <label>Teléfono<input name="telefono" value="<?= htmlspecialchars($editando['telefono'] ?? '') ?>"></label>
+      <label>Fecha inicio<input name="inicio" type="date" value="<?= htmlspecialchars($editando['inicio'] ?? '') ?>"></label>
+      <label>Fecha fin<input name="fin" type="date" value="<?= htmlspecialchars($editando['fin'] ?? '') ?>"></label>
+      <button><?= $editando ? 'Actualizar' : 'Guardar' ?></button>
     </form>
 
     <?php
     if ($_POST) {
-      $cumple = $_POST['cumple'] !== '' ? $_POST['cumple'] : null;
-      $inicio = $_POST['inicio'] !== '' ? $_POST['inicio'] : null;
-      $fin = $_POST['fin'] !== '' ? $_POST['fin'] : null;
-      $stmt = $conn->prepare("INSERT INTO team_pombo (nombre, apellido, celular, correo, cargo, cumple, contacto, telefono, inicio, fin) VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?)");
-      $stmt->bind_param(
-        "ssssssssss",
-        $_POST['nombre'],
-        $_POST['apellido'],
-        $_POST['celular'],
-        $_POST['correo'],
-        $_POST['cargo'],
-        $cumple,
-        $_POST['contacto'],
-        $_POST['telefono'],
-        $inicio,
-        $fin
-      );
+      if (!empty($_POST['id'])) {
+        $id = (int) $_POST['id'];
+        $stmt = $conn->prepare("UPDATE team_pombo SET nombre = ?, apellido = ?, celular = ?, correo = ?, cargo = ?, cumple = ?, contacto = ?, telefono = ?, inicio = ?, fin = ? WHERE id = ?");
+        $stmt->bind_param("ssssssssssi", $_POST['nombre'], $_POST['apellido'], $_POST['celular'], $_POST['correo'], $_POST['cargo'], $_POST['cumple'], $_POST['contacto'], $_POST['telefono'], $_POST['inicio'], $_POST['fin'], $id);
+      } else {
+        $stmt = $conn->prepare("INSERT INTO team_pombo (nombre, apellido, celular, correo, cargo, cumple, contacto, telefono, inicio, fin) VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?)");
+        $stmt->bind_param("ssssssssss", $_POST['nombre'], $_POST['apellido'], $_POST['celular'], $_POST['correo'], $_POST['cargo'], $_POST['cumple'], $_POST['contacto'], $_POST['telefono'], $_POST['inicio'], $_POST['fin']);
+      }
       $stmt->execute();
       $stmt->close();
       header("Location: team_registros.php");
