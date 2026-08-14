@@ -3,6 +3,7 @@
 CREATE DATABASE IF NOT EXISTS `directorio` DEFAULT CHARACTER SET utf8mb4 COLLATE utf8mb4_general_ci;
 USE `directorio`;
 
+
 /*!40101 SET @OLD_CHARACTER_SET_CLIENT=@@CHARACTER_SET_CLIENT */;
 /*!40101 SET @OLD_CHARACTER_SET_RESULTS=@@CHARACTER_SET_RESULTS */;
 /*!40101 SET @OLD_COLLATION_CONNECTION=@@COLLATION_CONNECTION */;
@@ -26,8 +27,11 @@ CREATE TABLE `artistas` (
   `correo` varchar(150) DEFAULT NULL,
   `filbo` varchar(50) DEFAULT NULL,
   `fecha_registro` timestamp NOT NULL DEFAULT current_timestamp(),
+  `creado_por` int(11) DEFAULT NULL,
+  `actualizado_en` timestamp NULL DEFAULT NULL,
+  `actualizado_por` int(11) DEFAULT NULL,
   PRIMARY KEY (`id`)
-) ENGINE=InnoDB AUTO_INCREMENT=12 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
+) ENGINE=InnoDB AUTO_INCREMENT=17 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
 /*!40101 SET character_set_client = @saved_cs_client */;
 DROP TABLE IF EXISTS `asocajas`;
 /*!40101 SET @saved_cs_client     = @@character_set_client */;
@@ -42,6 +46,9 @@ CREATE TABLE `asocajas` (
   `direccion` varchar(200) DEFAULT NULL,
   `correo` varchar(150) DEFAULT NULL,
   `fecha_registro` timestamp NOT NULL DEFAULT current_timestamp(),
+  `creado_por` int(11) DEFAULT NULL,
+  `actualizado_en` timestamp NULL DEFAULT NULL,
+  `actualizado_por` int(11) DEFAULT NULL,
   PRIMARY KEY (`id`)
 ) ENGINE=InnoDB AUTO_INCREMENT=2 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
 /*!40101 SET character_set_client = @saved_cs_client */;
@@ -64,6 +71,9 @@ CREATE TABLE `directivos` (
   `integrante` varchar(50) DEFAULT NULL,
   `vigencia` varchar(50) DEFAULT NULL,
   `fecha_registro` timestamp NOT NULL DEFAULT current_timestamp(),
+  `creado_por` int(11) DEFAULT NULL,
+  `actualizado_en` timestamp NULL DEFAULT NULL,
+  `actualizado_por` int(11) DEFAULT NULL,
   PRIMARY KEY (`id`)
 ) ENGINE=InnoDB AUTO_INCREMENT=4 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
 /*!40101 SET character_set_client = @saved_cs_client */;
@@ -80,6 +90,9 @@ CREATE TABLE `editoriales` (
   `correo` varchar(150) DEFAULT NULL,
   `descuento` varchar(50) DEFAULT NULL,
   `fecha_registro` timestamp NOT NULL DEFAULT current_timestamp(),
+  `creado_por` int(11) DEFAULT NULL,
+  `actualizado_en` timestamp NULL DEFAULT NULL,
+  `actualizado_por` int(11) DEFAULT NULL,
   PRIMARY KEY (`id`)
 ) ENGINE=InnoDB AUTO_INCREMENT=2 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
 /*!40101 SET character_set_client = @saved_cs_client */;
@@ -100,6 +113,9 @@ CREATE TABLE `instituciones_e` (
   `correo` varchar(150) DEFAULT NULL,
   `ciudad` varchar(100) DEFAULT NULL,
   `fecha_registro` timestamp NOT NULL DEFAULT current_timestamp(),
+  `creado_por` int(11) DEFAULT NULL,
+  `actualizado_en` timestamp NULL DEFAULT NULL,
+  `actualizado_por` int(11) DEFAULT NULL,
   PRIMARY KEY (`id`)
 ) ENGINE=InnoDB AUTO_INCREMENT=5 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
 /*!40101 SET character_set_client = @saved_cs_client */;
@@ -117,6 +133,9 @@ CREATE TABLE `medios` (
   `telefono2` varchar(50) DEFAULT NULL,
   `direccion` varchar(200) DEFAULT NULL,
   `fecha_registro` timestamp NOT NULL DEFAULT current_timestamp(),
+  `creado_por` int(11) DEFAULT NULL,
+  `actualizado_en` timestamp NULL DEFAULT NULL,
+  `actualizado_por` int(11) DEFAULT NULL,
   PRIMARY KEY (`id`)
 ) ENGINE=InnoDB AUTO_INCREMENT=2 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
 /*!40101 SET character_set_client = @saved_cs_client */;
@@ -136,6 +155,9 @@ CREATE TABLE `mercadeo` (
   `proyecto` varchar(150) DEFAULT NULL,
   `patrocinio` varchar(100) DEFAULT NULL,
   `fecha_registro` timestamp NOT NULL DEFAULT current_timestamp(),
+  `creado_por` int(11) DEFAULT NULL,
+  `actualizado_en` timestamp NULL DEFAULT NULL,
+  `actualizado_por` int(11) DEFAULT NULL,
   PRIMARY KEY (`id`)
 ) ENGINE=InnoDB AUTO_INCREMENT=2 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
 /*!40101 SET character_set_client = @saved_cs_client */;
@@ -156,6 +178,9 @@ CREATE TABLE `practicantes` (
   `contacto` varchar(150) DEFAULT NULL,
   `telefono_contacto` varchar(50) DEFAULT NULL,
   `fecha_registro` timestamp NOT NULL DEFAULT current_timestamp(),
+  `creado_por` int(11) DEFAULT NULL,
+  `actualizado_en` timestamp NULL DEFAULT NULL,
+  `actualizado_por` int(11) DEFAULT NULL,
   PRIMARY KEY (`id`)
 ) ENGINE=InnoDB AUTO_INCREMENT=3 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
 /*!40101 SET character_set_client = @saved_cs_client */;
@@ -170,6 +195,9 @@ CREATE TABLE `proveedores` (
   `telefono` varchar(50) DEFAULT NULL,
   `correo` varchar(150) DEFAULT NULL,
   `fecha_registro` timestamp NOT NULL DEFAULT current_timestamp(),
+  `creado_por` int(11) DEFAULT NULL,
+  `actualizado_en` timestamp NULL DEFAULT NULL,
+  `actualizado_por` int(11) DEFAULT NULL,
   PRIMARY KEY (`id`)
 ) ENGINE=InnoDB AUTO_INCREMENT=4 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
 /*!40101 SET character_set_client = @saved_cs_client */;
@@ -184,6 +212,9 @@ CREATE TABLE `talleristas` (
   `cargo` varchar(100) DEFAULT NULL,
   `perfil` text DEFAULT NULL,
   `fecha_registro` timestamp NOT NULL DEFAULT current_timestamp(),
+  `creado_por` int(11) DEFAULT NULL,
+  `actualizado_en` timestamp NULL DEFAULT NULL,
+  `actualizado_por` int(11) DEFAULT NULL,
   PRIMARY KEY (`id`)
 ) ENGINE=InnoDB AUTO_INCREMENT=2 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
 /*!40101 SET character_set_client = @saved_cs_client */;
@@ -203,6 +234,9 @@ CREATE TABLE `team_pombo` (
   `inicio` date DEFAULT NULL,
   `fin` date DEFAULT NULL,
   `fecha_registro` timestamp NOT NULL DEFAULT current_timestamp(),
+  `creado_por` int(11) DEFAULT NULL,
+  `actualizado_en` timestamp NULL DEFAULT NULL,
+  `actualizado_por` int(11) DEFAULT NULL,
   PRIMARY KEY (`id`)
 ) ENGINE=InnoDB AUTO_INCREMENT=3 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
 /*!40101 SET character_set_client = @saved_cs_client */;
@@ -215,9 +249,14 @@ CREATE TABLE `usuarios` (
   `correo` varchar(150) NOT NULL,
   `password` varchar(255) NOT NULL,
   `creado_en` timestamp NOT NULL DEFAULT current_timestamp(),
+  `rol` enum('admin','usuario') NOT NULL DEFAULT 'usuario',
+  `intentos_fallidos` int(11) NOT NULL DEFAULT 0,
+  `bloqueado_hasta` datetime DEFAULT NULL,
+  `pregunta_seguridad` varchar(255) DEFAULT NULL,
+  `respuesta_seguridad_hash` varchar(255) DEFAULT NULL,
   PRIMARY KEY (`id`),
   UNIQUE KEY `correo` (`correo`)
-) ENGINE=InnoDB AUTO_INCREMENT=9 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
+) ENGINE=InnoDB AUTO_INCREMENT=11 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
 /*!40101 SET character_set_client = @saved_cs_client */;
 /*!40103 SET TIME_ZONE=@OLD_TIME_ZONE */;
 

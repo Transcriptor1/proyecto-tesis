@@ -4,10 +4,12 @@
  *
  * Formulario para elegir un rango de fechas y descargar en Excel los
  * registros de la tabla `editoriales` cuya fecha_registro este en ese
- * rango. El archivo lo genera exportar.php. Requiere sesion activa
- * (auth.php).
+ * rango. El archivo lo genera exportar.php. Solo administradores.
+ * Requiere sesion activa (auth.php).
  */
 require "auth.php";
+require_once "includes/layout.php";
+require_admin();
 ?>
 <!DOCTYPE html>
 <html lang="es">
@@ -21,23 +23,12 @@ require "auth.php";
 
 <body>
 
-  <header>
-    <div class="logo">SIRAD</div>
-    <div class="header-actions">
-      <span>Hola, <?= htmlspecialchars($_SESSION['usuario_nombre']) ?></span>
-      <a href="index.php">&larr; Volver al directorio</a>
-      <a href="logout.php">Cerrar sesión</a>
-    </div>
-  </header>
+  <?php render_header(); ?>
 
   <main>
     <h1>Editoriales</h1>
 
-    <div class="page-actions">
-      <a href="editoriales.php">Registrar</a>
-      <a href="editoriales_registros.php">Ver registros</a>
-      <a href="editoriales_exportar.php" class="active">Descargar Excel</a>
-    </div>
+    <?php render_page_actions('editoriales', 'exportar'); ?>
 
     <div class="export-bar">
       <form method="GET" action="exportar.php">

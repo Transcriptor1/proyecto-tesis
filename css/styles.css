@@ -70,6 +70,19 @@ header a:hover::after {
     font-size: 14px;
 }
 
+.badge {
+    display: inline-block;
+    padding: 2px 8px;
+    border-radius: 999px;
+    font-size: 11px;
+    font-weight: 700;
+    text-transform: uppercase;
+    letter-spacing: 0.4px;
+    background: rgba(255, 255, 255, 0.22);
+    vertical-align: middle;
+    margin-left: 2px;
+}
+
 main {
     max-width: 1300px;
     margin: 30px auto;
@@ -143,13 +156,15 @@ h1 {
     color: #374151;
 }
 
-.form-card input {
+.form-card input,
+.form-card select {
     padding: 10px;
     border: 1px solid #d1d5db;
     border-radius: 8px;
     font-size: 14px;
     font-weight: normal;
     width: 100%;
+    font-family: inherit;
 }
 
 .form-card button {
@@ -171,11 +186,92 @@ h1 {
     box-shadow: 0 8px 16px rgba(37, 99, 235, 0.25);
 }
 
+.search-bar {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    margin-bottom: 14px;
+}
+
+.search-bar input {
+    flex: 1;
+    max-width: 320px;
+    padding: 10px 14px;
+    border: 1px solid #d1d5db;
+    border-radius: 8px;
+    font-size: 14px;
+}
+
+.search-bar input:focus {
+    outline: none;
+    border-color: #2563eb;
+    box-shadow: 0 0 0 3px rgba(37, 99, 235, 0.15);
+}
+
+.search-bar button {
+    padding: 10px 18px;
+    background: #2563eb;
+    color: white;
+    border: none;
+    border-radius: 8px;
+    font-weight: 600;
+    font-size: 14px;
+    cursor: pointer;
+    transition: background 0.2s ease, transform 0.2s ease;
+}
+
+.search-bar button:hover {
+    background: #1d4ed8;
+    transform: translateY(-2px);
+}
+
 .table-card {
     background: white;
     border-radius: 14px;
     box-shadow: 0 8px 20px rgba(0, 0, 0, 0.08);
     overflow-x: auto;
+}
+
+.empty-state {
+    text-align: center;
+    padding: 50px 20px;
+    color: #6b7280;
+    font-size: 15px;
+}
+
+.pagination {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    gap: 6px;
+    padding: 14px;
+    flex-wrap: wrap;
+}
+
+.pagination button {
+    padding: 6px 12px;
+    border: 1px solid #d1d5db;
+    background: white;
+    border-radius: 6px;
+    font-size: 13px;
+    cursor: pointer;
+    transition: background 0.2s ease, color 0.2s ease, border-color 0.2s ease;
+}
+
+.pagination button:hover:not(.active):not(:disabled) {
+    background: #f4f6fb;
+    border-color: #2563eb;
+}
+
+.pagination button.active {
+    background: #2563eb;
+    color: white;
+    border-color: #2563eb;
+}
+
+.pagination button:disabled {
+    opacity: 0.4;
+    cursor: not-allowed;
 }
 
 table {
@@ -366,4 +462,33 @@ tbody tr:hover td {
 
 .auth-link a:hover {
     text-decoration: underline;
+}
+
+.toast-container {
+    position: fixed;
+    top: 20px;
+    right: 20px;
+    z-index: 1000;
+    display: flex;
+    flex-direction: column;
+    gap: 10px;
+}
+
+.toast {
+    background: #111827;
+    color: white;
+    padding: 12px 18px;
+    border-radius: 8px;
+    box-shadow: 0 10px 24px rgba(0, 0, 0, 0.28);
+    font-size: 14px;
+    font-weight: 600;
+    max-width: 320px;
+}
+
+.toast.success {
+    background: #059669;
+}
+
+.toast.error {
+    background: #dc2626;
 }

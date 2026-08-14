@@ -3,10 +3,19 @@
  * Panel principal de SIRAD.
  *
  * Pagina de entrada del sistema tras iniciar sesion: muestra una
- * tarjeta de acceso por cada uno de los once modulos del directorio.
- * Requiere sesion activa (auth.php).
+ * tarjeta de acceso por cada uno de los once modulos del directorio,
+ * con la cantidad de registros de cada uno. Requiere sesion activa
+ * (auth.php).
  */
 require "auth.php";
+include "conexion.php";
+require_once "includes/layout.php";
+
+function contar(mysqli $conn, string $tabla): int
+{
+    $resultado = $conn->query("SELECT COUNT(*) AS total FROM `$tabla`");
+    return (int) $resultado->fetch_assoc()['total'];
+}
 ?>
 <!DOCTYPE html>
 <html lang="es">
@@ -14,6 +23,7 @@ require "auth.php";
 <head>
     <meta charset="UTF-8">
     <title>SIRAD - Sistema de Registro y Administración de Directorios</title>
+    <link rel="stylesheet" href="css/styles.css">
     <script src="js/animations.js" defer></script>
 
     <style>
@@ -31,71 +41,12 @@ require "auth.php";
             color: #1f2937;
         }
 
-        header {
-            background: linear-gradient(120deg, #1d4ed8, #4338ca, #2563eb);
-            background-size: 220% 220%;
-            color: white;
-            padding: 20px 40px;
-            display: flex;
-            justify-content: space-between;
-            align-items: center;
-            position: sticky;
-            top: 0;
-            z-index: 100;
-            box-shadow: 0 4px 18px rgba(30, 64, 175, 0.28);
-        }
-
-        header .logo {
-            font-size: 18px;
-            font-weight: bold;
-            letter-spacing: 0.3px;
-            display: inline-block;
-            transition: transform 0.25s ease;
-        }
-
-        header .logo:hover {
-            transform: scale(1.05);
-        }
-
-        .header-actions {
-            display: flex;
-            align-items: center;
-            gap: 18px;
-            font-size: 14px;
-        }
-
-        .header-actions a {
-            position: relative;
-            color: white;
-            text-decoration: none;
-            font-weight: 500;
-            transition: opacity 0.2s ease;
-        }
-
-        .header-actions a::after {
-            content: "";
-            position: absolute;
-            left: 0;
-            bottom: -5px;
-            width: 0;
-            height: 2px;
-            background: white;
-            border-radius: 2px;
-            transition: width 0.3s ease;
-        }
-
-        .header-actions a:hover {
-            opacity: 0.95;
-        }
-
-        .header-actions a:hover::after {
-            width: 100%;
-        }
-
         h1 {
             text-align: center;
             margin: 40px 20px 6px;
             font-size: 32px;
+            border-left: none;
+            padding-left: 0;
         }
 
         .subtitle {
@@ -153,6 +104,17 @@ require "auth.php";
         .card h3 {
             margin: 10px 0;
             font-size: 22px;
+        }
+
+        .card .stat {
+            display: inline-block;
+            margin-bottom: 10px;
+            font-size: 13px;
+            font-weight: 700;
+            color: #2563eb;
+            background: #eef2ff;
+            padding: 3px 10px;
+            border-radius: 999px;
         }
 
         .card p {
@@ -236,16 +198,7 @@ require "auth.php";
 
 <body>
 
-    <header>
-        <div class="logo">
-            🗂️ SIRAD<br>
-            <small>Sistema de Registro y Administración de Directorios</small>
-        </div>
-        <div class="header-actions">
-            <span>Hola, <?= htmlspecialchars($_SESSION['usuario_nombre']) ?></span>
-            <a href="logout.php">Cerrar sesión</a>
-        </div>
-    </header>
+    <?php render_header(false); ?>
 
     <h1>SIRAD</h1>
     <p class="subtitle">Selecciona un módulo para registrar o consultar información institucional</p>
@@ -255,6 +208,7 @@ require "auth.php";
         <div class="card">
             <div class="icon">🏫</div>
             <h3>Instituciones Educativas</h3>
+            <span class="stat"><?= contar($conn, 'instituciones_e') ?> registros</span>
             <p>Universidades, colegios y jardines vinculados</p>
             <a href="instituciones-e.php" class="blue">Ingresar</a>
         </div>
@@ -262,6 +216,7 @@ require "auth.php";
         <div class="card">
             <div class="icon">🎓</div>
             <h3>Practicantes</h3>
+            <span class="stat"><?= contar($conn, 'practicantes') ?> registros</span>
             <p>Estudiantes en práctica académica</p>
             <a href="practicantes.php" class="green">Ingresar</a>
         </div>
@@ -269,6 +224,7 @@ require "auth.php";
         <div class="card">
             <div class="icon">🎨</div>
             <h3>Artistas</h3>
+            <span class="stat"><?= contar($conn, 'artistas') ?> registros</span>
             <p>Ilustradores, escritores y creadores</p>
             <a href="artistas.php" class="orange">Ingresar</a>
         </div>
@@ -276,6 +232,7 @@ require "auth.php";
         <div class="card">
             <div class="icon">🧑‍🏫</div>
             <h3>Talleristas</h3>
+            <span class="stat"><?= contar($conn, 'talleristas') ?> registros</span>
             <p>Facilitadores y formadores</p>
             <a href="talleristas.php" class="purple">Ingresar</a>
         </div>
@@ -283,6 +240,7 @@ require "auth.php";
         <div class="card">
             <div class="icon">📚</div>
             <h3>Editoriales</h3>
+            <span class="stat"><?= contar($conn, 'editoriales') ?> registros</span>
             <p>Editoriales aliadas</p>
             <a href="editoriales.php" class="pink">Ingresar</a>
         </div>
@@ -290,6 +248,7 @@ require "auth.php";
         <div class="card">
             <div class="icon">🤝</div>
             <h3>Asocajas</h3>
+            <span class="stat"><?= contar($conn, 'asocajas') ?> registros</span>
             <p>Cajas de compensación</p>
             <a href="asocajas.php" class="gray">Ingresar</a>
         </div>
@@ -297,6 +256,7 @@ require "auth.php";
         <div class="card">
             <div class="icon">📢</div>
             <h3>Mercadeo</h3>
+            <span class="stat"><?= contar($conn, 'mercadeo') ?> registros</span>
             <p>Empresas y patrocinios</p>
             <a href="mercadeo.php" class="blue">Ingresar</a>
         </div>
@@ -304,6 +264,7 @@ require "auth.php";
         <div class="card">
             <div class="icon">🚚</div>
             <h3>Proveedores</h3>
+            <span class="stat"><?= contar($conn, 'proveedores') ?> registros</span>
             <p>Proveedores nacionales e internacionales</p>
             <a href="proveedores.php" class="green">Ingresar</a>
         </div>
@@ -311,6 +272,7 @@ require "auth.php";
         <div class="card">
             <div class="icon">📰</div>
             <h3>Medios</h3>
+            <span class="stat"><?= contar($conn, 'medios') ?> registros</span>
             <p>Prensa, radio y medios digitales</p>
             <a href="medios.php" class="orange">Ingresar</a>
         </div>
@@ -318,6 +280,7 @@ require "auth.php";
         <div class="card">
             <div class="icon">👥</div>
             <h3>Team</h3>
+            <span class="stat"><?= contar($conn, 'team_pombo') ?> registros</span>
             <p>Equipo interno de la fundación</p>
             <a href="team.php" class="purple">Ingresar</a>
         </div>
@@ -325,6 +288,7 @@ require "auth.php";
         <div class="card">
             <div class="icon">🏛️</div>
             <h3>Directivos</h3>
+            <span class="stat"><?= contar($conn, 'directivos') ?> registros</span>
             <p>Miembros directivos y vigencias</p>
             <a href="directivos.php" class="red">Ingresar</a>
         </div>

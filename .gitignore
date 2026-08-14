@@ -1,1 +1,3 @@
 .claude/
+logs/*.log
+db/backups/*.sql
