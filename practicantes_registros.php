@@ -13,6 +13,7 @@ require "auth.php";
 include "conexion.php";
 require_once "includes/layout.php";
 require_once "includes/csrf.php";
+require_once "includes/etiquetas.php";
 
 if (isset($_POST['eliminar_id'])) {
     csrf_verify();
@@ -27,6 +28,7 @@ if (isset($_POST['eliminar_id'])) {
 }
 
 $esAdmin = is_admin();
+$etiquetasPorRegistro = etiquetas_por_registro($conn, 'practicantes');
 ?>
 <!DOCTYPE html>
 <html lang="es">
@@ -73,6 +75,7 @@ $esAdmin = is_admin();
             <th>Cumpleaños</th>
             <th>Contacto de emergencia</th>
             <th>Teléfono contacto</th>
+            <th>Etiquetas</th>
             <?php if ($esAdmin): ?><th>Acciones</th><?php endif; ?>
           </tr>
           <?php
@@ -89,6 +92,9 @@ $esAdmin = is_admin();
               . "<td>" . htmlspecialchars($f['cumple']) . "</td>"
               . "<td>" . htmlspecialchars($f['contacto']) . "</td>"
               . "<td>" . htmlspecialchars($f['telefono_contacto']) . "</td>";
+            echo "<td>";
+            render_tags($etiquetasPorRegistro[(int) $f['id']] ?? []);
+            echo "<a href=\"etiqueta_asignar.php?modulo=practicantes&id=" . (int) $f['id'] . "\" class=\"btn-edit\">Etiquetas</a></td>";
             if ($esAdmin) {
               echo "<td>"
                 . "<a href=\"practicantes.php?id=" . (int) $f['id'] . "\" class=\"btn-edit\">Editar</a>"

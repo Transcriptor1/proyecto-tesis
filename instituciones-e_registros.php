@@ -13,6 +13,7 @@ require "auth.php";
 include "conexion.php";
 require_once "includes/layout.php";
 require_once "includes/csrf.php";
+require_once "includes/etiquetas.php";
 
 if (isset($_POST['eliminar_id'])) {
     csrf_verify();
@@ -27,6 +28,7 @@ if (isset($_POST['eliminar_id'])) {
 }
 
 $esAdmin = is_admin();
+$etiquetasPorRegistro = etiquetas_por_registro($conn, 'instituciones-e');
 ?>
 <!DOCTYPE html>
 <html lang="es">
@@ -73,6 +75,7 @@ $esAdmin = is_admin();
             <th>Dirección</th>
             <th>Correo</th>
             <th>Ciudad</th>
+            <th>Etiquetas</th>
             <?php if ($esAdmin): ?><th>Acciones</th><?php endif; ?>
           </tr>
           <?php
@@ -89,6 +92,9 @@ $esAdmin = is_admin();
               . "<td>" . htmlspecialchars($f['direccion']) . "</td>"
               . "<td>" . htmlspecialchars($f['correo']) . "</td>"
               . "<td>" . htmlspecialchars($f['ciudad']) . "</td>";
+            echo "<td>";
+            render_tags($etiquetasPorRegistro[(int) $f['id']] ?? []);
+            echo "<a href=\"etiqueta_asignar.php?modulo=instituciones-e&id=" . (int) $f['id'] . "\" class=\"btn-edit\">Etiquetas</a></td>";
             if ($esAdmin) {
               echo "<td>"
                 . "<a href=\"instituciones-e.php?id=" . (int) $f['id'] . "\" class=\"btn-edit\">Editar</a>"

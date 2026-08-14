@@ -13,6 +13,7 @@ require "auth.php";
 include "conexion.php";
 require_once "includes/layout.php";
 require_once "includes/csrf.php";
+require_once "includes/etiquetas.php";
 
 if (isset($_POST['eliminar_id'])) {
     csrf_verify();
@@ -27,6 +28,7 @@ if (isset($_POST['eliminar_id'])) {
 }
 
 $esAdmin = is_admin();
+$etiquetasPorRegistro = etiquetas_por_registro($conn, 'asocajas');
 ?>
 <!DOCTYPE html>
 <html lang="es">
@@ -69,6 +71,7 @@ $esAdmin = is_admin();
             <th>Teléfono</th>
             <th>Dirección</th>
             <th>Correo</th>
+            <th>Etiquetas</th>
             <?php if ($esAdmin): ?><th>Acciones</th><?php endif; ?>
           </tr>
           <?php
@@ -81,6 +84,9 @@ $esAdmin = is_admin();
               . "<td>" . htmlspecialchars($f['telefono']) . "</td>"
               . "<td>" . htmlspecialchars($f['direccion']) . "</td>"
               . "<td>" . htmlspecialchars($f['correo']) . "</td>";
+            echo "<td>";
+            render_tags($etiquetasPorRegistro[(int) $f['id']] ?? []);
+            echo "<a href=\"etiqueta_asignar.php?modulo=asocajas&id=" . (int) $f['id'] . "\" class=\"btn-edit\">Etiquetas</a></td>";
             if ($esAdmin) {
               echo "<td>"
                 . "<a href=\"asocajas.php?id=" . (int) $f['id'] . "\" class=\"btn-edit\">Editar</a>"

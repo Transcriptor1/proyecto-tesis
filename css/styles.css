@@ -252,6 +252,30 @@ h1 {
     color: #b91c1c;
 }
 
+.tag {
+    display: inline-block;
+    padding: 3px 10px;
+    border-radius: 999px;
+    font-size: 12px;
+    font-weight: 700;
+    color: white;
+    margin: 2px 3px 2px 0;
+}
+
+.tag-checklist {
+    grid-column: 1 / -1;
+    display: flex;
+    flex-wrap: wrap;
+    gap: 12px;
+}
+
+.tag-check {
+    display: flex;
+    align-items: center;
+    gap: 6px;
+    cursor: pointer;
+}
+
 .empty-state {
     text-align: center;
     padding: 50px 20px;
@@ -511,4 +535,81 @@ tbody tr:hover td {
 
 .toast.error {
     background: #dc2626;
+}
+
+.kpi-row {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(180px, 1fr));
+    gap: 16px;
+    margin-bottom: 24px;
+}
+
+.kpi-card {
+    background: white;
+    border-radius: 14px;
+    padding: 18px 20px;
+    box-shadow: 0 8px 20px rgba(0, 0, 0, 0.08);
+}
+
+.kpi-card .kpi-valor {
+    font-size: 30px;
+    font-weight: 800;
+    color: #2563eb;
+    line-height: 1.1;
+}
+
+.kpi-card .kpi-etiqueta {
+    font-size: 13px;
+    color: #6b7280;
+    margin-top: 4px;
+}
+
+.report-card {
+    background: white;
+    border-radius: 14px;
+    padding: 24px;
+    box-shadow: 0 8px 20px rgba(0, 0, 0, 0.08);
+    margin-bottom: 24px;
+}
+
+.report-card h2 {
+    font-size: 17px;
+    margin: 0 0 18px;
+}
+
+.chart-bar-row {
+    display: grid;
+    grid-template-columns: 170px 1fr 44px;
+    align-items: center;
+    gap: 12px;
+    font-size: 13px;
+    margin-bottom: 10px;
+}
+
+.chart-bar-label {
+    color: #374151;
+    font-weight: 600;
+    text-align: right;
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
+}
+
+.chart-bar-track {
+    background: #eef2ff;
+    border-radius: 6px;
+    height: 18px;
+    overflow: hidden;
+}
+
+.chart-bar-fill {
+    height: 100%;
+    background: linear-gradient(90deg, #2563eb, #6366f1);
+    border-radius: 6px;
+    transition: width 0.6s ease;
+}
+
+.chart-bar-value {
+    font-weight: 700;
+    color: #1f2937;
 }

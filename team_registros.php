@@ -13,6 +13,7 @@ require "auth.php";
 include "conexion.php";
 require_once "includes/layout.php";
 require_once "includes/csrf.php";
+require_once "includes/etiquetas.php";
 
 if (isset($_POST['eliminar_id'])) {
     csrf_verify();
@@ -27,6 +28,7 @@ if (isset($_POST['eliminar_id'])) {
 }
 
 $esAdmin = is_admin();
+$etiquetasPorRegistro = etiquetas_por_registro($conn, 'team');
 ?>
 <!DOCTYPE html>
 <html lang="es">
@@ -72,6 +74,7 @@ $esAdmin = is_admin();
             <th>Teléfono</th>
             <th>Fecha inicio</th>
             <th>Fecha fin</th>
+            <th>Etiquetas</th>
             <?php if ($esAdmin): ?><th>Acciones</th><?php endif; ?>
           </tr>
           <?php
@@ -87,6 +90,9 @@ $esAdmin = is_admin();
               . "<td>" . htmlspecialchars($f['telefono']) . "</td>"
               . "<td>" . htmlspecialchars($f['inicio']) . "</td>"
               . "<td>" . htmlspecialchars($f['fin']) . "</td>";
+            echo "<td>";
+            render_tags($etiquetasPorRegistro[(int) $f['id']] ?? []);
+            echo "<a href=\"etiqueta_asignar.php?modulo=team&id=" . (int) $f['id'] . "\" class=\"btn-edit\">Etiquetas</a></td>";
             if ($esAdmin) {
               echo "<td>"
                 . "<a href=\"team.php?id=" . (int) $f['id'] . "\" class=\"btn-edit\">Editar</a>"

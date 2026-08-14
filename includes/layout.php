@@ -22,6 +22,8 @@ function render_header(bool $mostrarVolver = true): void
       <a href="importar.php">Importar</a>
       <?php if (is_admin()): ?>
       <a href="usuarios.php">Usuarios</a>
+      <a href="etiquetas.php">Etiquetas</a>
+      <a href="reportes.php">Reportes</a>
       <?php endif; ?>
       <?php if ($mostrarVolver): ?>
       <a href="index.php">&larr; Volver al directorio</a>
