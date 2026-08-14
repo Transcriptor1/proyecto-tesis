@@ -20,6 +20,9 @@ function render_header(bool $mostrarVolver = true): void
       <span>Hola, <?= htmlspecialchars($_SESSION['usuario_nombre']) ?> <span class="badge"><?= $rolLabel ?></span></span>
       <a href="buscar.php">Buscar</a>
       <a href="importar.php">Importar</a>
+      <?php if (is_admin()): ?>
+      <a href="usuarios.php">Usuarios</a>
+      <?php endif; ?>
       <?php if ($mostrarVolver): ?>
       <a href="index.php">&larr; Volver al directorio</a>
       <?php endif; ?>

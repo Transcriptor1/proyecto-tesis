@@ -232,6 +232,26 @@ h1 {
     overflow-x: auto;
 }
 
+.pill {
+    display: inline-block;
+    padding: 3px 10px;
+    border-radius: 999px;
+    font-size: 12px;
+    font-weight: 700;
+    background: #eef2ff;
+    color: #2563eb;
+}
+
+.pill-admin {
+    background: #dcfce7;
+    color: #15803d;
+}
+
+.pill-blocked {
+    background: #fee2e2;
+    color: #b91c1c;
+}
+
 .empty-state {
     text-align: center;
     padding: 50px 20px;
